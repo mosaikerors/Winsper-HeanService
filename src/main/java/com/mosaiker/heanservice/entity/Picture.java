@@ -9,15 +9,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document
+@Document("picture")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Picture {
     @Id
-    private String id;
-    private String name; // 文件名
-    private Date createdTime; // 上传时间
+    private String pId;
     private Binary content; // 文件内容
     private String contentType; // 文件类型
     private long size; // 文件大小
