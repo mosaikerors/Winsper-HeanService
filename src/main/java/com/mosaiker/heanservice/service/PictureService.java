@@ -12,4 +12,10 @@ public interface PictureService {
     List<Picture> findPicturesByPIds(List<String> pIds);
 
     String uploadPicture(MultipartFile file, String baseUrl) throws IOException;
+
 }
+
+
+
+
+
