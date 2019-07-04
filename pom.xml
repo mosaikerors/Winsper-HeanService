@@ -10,13 +10,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mosaiker</groupId>
-    <artifactId>user-service</artifactId>
+    <artifactId>hean-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>user-service</name>
+    <name>hean-service</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
+        <docker.image.prefix>springboot</docker.image.prefix>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
     </properties>
 
@@ -140,6 +141,22 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.11</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>admin-service.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
             </plugin>
         </plugins>
     </build>
