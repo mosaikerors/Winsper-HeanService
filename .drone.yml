@@ -1,5 +1,5 @@
 kind: pipline
-name: Winsper-AdminService
+name: Winsper-HeanService
 
 steps:
 - name: test
@@ -24,7 +24,7 @@ steps:
     rm: true
     target: /Winsper/hean-service
     source:
-    - target/hean-service.jar
+    - target/hean-service-0.0.1-SNAPSHOT.jar
     - Dockerfile
 
 - name: deploy
