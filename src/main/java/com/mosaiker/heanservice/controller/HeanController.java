@@ -28,14 +28,15 @@ public class HeanController {
     @Autowired
     private PictureService pictureService;
 
-    private static final String baseUrl = "http://localhost:7190/hean/pictures/get/";
+    private static final String baseUrl = "http://47.103.0.246:7190/hean/pictures/get/";
 
     @Autowired
     private HeanService heanService;
 
-    @RequestMapping(value = "/{uId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/byUId", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject findAllByUId(@PathVariable(value = "uId") Long uId) {
+    public JSONObject findAllByUId(@RequestBody JSONObject param) {
+        Long uId = param.getLong("uId");
         List<Hean> heanList = heanService.findHeansByUId(uId);
         JSONObject result = new JSONObject();
         result.put("heanArray", heanList);
@@ -53,12 +54,13 @@ public class HeanController {
         return result;
     }
 
-    @RequestMapping(value = "/delete/{hId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ResponseBody
-    public JSONObject deleteHean(@PathVariable(value = "hId") String hId) {
-        Boolean isdeleted = heanService.deleteByHId(hId);
+    public JSONObject deleteHean(@RequestBody JSONObject param) {
+        String hId = param.getString("hId");
+        Boolean isDeleted = heanService.deleteByHId(hId);
         JSONObject result = new JSONObject();
-        if (isdeleted) {
+        if (isDeleted) {
             result.put("message", "ok");
         } else {
             result.put("message", "not found");
@@ -69,27 +71,28 @@ public class HeanController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject uploadPicture(@RequestParam(value = "pictures") MultipartFile[] files,
+    public JSONObject uploadHean(@RequestParam(value = "pictures") MultipartFile[] files,
                                     @RequestParam(value = "uId") Long uId, @RequestParam(value = "text") String text,
                                     @RequestParam(value = "location") String location) {
         JSONObject result = new JSONObject();
-        if ((files == null && text == null) || files.length <= 0) {
+        if (files == null && text == null) {
             result.put("message", "请发送非空信息");
             return result;
         }
         List<String> pUrls = new ArrayList<>();
-        for (int i = 0; i < files.length; i++) {
-            MultipartFile file = files[i];
-            try {
-                String url = pictureService.uploadPicture(file, baseUrl);
-                pUrls.add(url);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                result.put("message", "第" + i + "张图片上传失败");
-                return result;
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                MultipartFile file = files[i];
+                try {
+                    String url = pictureService.uploadPicture(file, baseUrl);
+                    pUrls.add(url);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                    result.put("message", "第" + i + "张图片上传失败");
+                    return result;
+                }
             }
         }
-
         String[] locations = location.split(",");
         if (locations.length == 3) {
             double longtitude = Double.parseDouble(locations[0]);
