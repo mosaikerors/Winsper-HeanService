@@ -1,6 +1,7 @@
 package com.mosaiker.heanservice.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.Picture;
 import com.mosaiker.heanservice.service.HeanService;
@@ -38,10 +39,20 @@ public class HeanController {
     public JSONObject findAllByUId(@RequestBody JSONObject param) {
         Long uId = param.getLong("uId");
         List<Hean> heanList = heanService.findHeansByUId(uId);
-        JSONObject result = new JSONObject();
-        result.put("heanArray", heanList);
-        result.put("message", "ok");
-        return result;
+        if(heanList!=null) {
+            JSONObject result = new JSONObject();
+            JSONArray heanArray = new JSONArray();
+            for(Hean hean:heanList){
+                heanArray.add(hean.ToJSONObject());
+            }
+            result.put("heanArray", heanList);
+            result.put("message", "ok");
+            return result;
+        }else{
+            JSONObject result = new JSONObject();
+            result.put("message","not found");
+            return result;
+        }
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -49,7 +60,11 @@ public class HeanController {
     public JSONObject findAll() {
         List<Hean> heanList = heanService.findAllHeans();
         JSONObject result = new JSONObject();
-        result.put("heanArray", heanList);
+        JSONArray heanArray = new JSONArray();
+        for(Hean hean:heanList){
+            heanArray.add(hean.ToJSONObject());
+        }
+        result.put("heanArray", heanArray);
         result.put("message", "ok");
         return result;
     }
@@ -69,14 +84,14 @@ public class HeanController {
     }
 
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload", method = RequestMethod.POST,produces="application/json; charset=UTF-8")
     @ResponseBody
     public JSONObject uploadHean(@RequestParam(value = "pictures") MultipartFile[] files,
                                     @RequestParam(value = "uId") Long uId, @RequestParam(value = "text") String text,
                                     @RequestParam(value = "location") String location) {
         JSONObject result = new JSONObject();
-        if (files == null && text == null) {
-            result.put("message", "请发送非空信息");
+        if ((files == null||files.length<=0) && (text == null||text.equals(""))) {
+            result.put("message", "pics and text cannot all be null");
             return result;
         }
         List<String> pUrls = new ArrayList<>();
@@ -88,7 +103,7 @@ public class HeanController {
                     pUrls.add(url);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
-                    result.put("message", "第" + i + "张图片上传失败");
+                    result.put("message", "No." + i + " pic fail");
                     return result;
                 }
             }
@@ -104,7 +119,7 @@ public class HeanController {
             result.put("pictures", pUrls);
             return result;
         } else {
-            result.put("message", "请提供正确的定位格式（经纬高分别以\',\'分离）");
+            result.put("message", "wrong location format");
             return result;
         }
     }
@@ -113,13 +128,9 @@ public class HeanController {
             MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseBody
     public byte[] getPicture(@PathVariable String pId) {
-        byte[] data = null;
         Picture picture = pictureService.findPictureByPId(pId);
-        if (picture != null) {
-            data = picture.getContent().getData();
-        } else {
-            System.out.println("get picture fail");
-        }
+        byte[] data = picture.getContent().getData();
+
         return data;
     }
 }

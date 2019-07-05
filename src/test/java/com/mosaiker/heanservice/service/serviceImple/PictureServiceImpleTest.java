@@ -59,9 +59,13 @@ public void testFindPictureByPId() throws Exception {
   Picture pic1 = new Picture("pic1",new Binary("pic1".getBytes()),"JPEG",1L);
   when(pictureRepository.findPictureByPId("pic1")).thenReturn(pic1);
   Picture picResult=pictureServiceImple.findPictureByPId("pic1");
-  verify(pictureRepository).findPictureByPId("pic1");
   assertEquals(pic1,picResult);
-  verifyNoMoreInteractions(pictureRepository);
+
+  when(pictureRepository.findPictureByPId("pic2")).thenReturn(null);
+  when(pictureRepository.findPictureByPId("5d1ebb99e5b9b1ac58d09308")).thenReturn(pic1);
+  Picture picResult2 = pictureServiceImple.findPictureByPId("pic2");
+  verify(pictureRepository).findPictureByPId("pic2");
+  assertEquals(pic1,picResult2);
 
 }
 

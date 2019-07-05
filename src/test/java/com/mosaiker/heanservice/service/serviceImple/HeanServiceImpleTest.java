@@ -53,9 +53,7 @@ public class HeanServiceImpleTest {
     List<Hean> heanList = Arrays.asList(hean1, hean2);
     when(heanRepository.findAllByUId(10000L)).thenReturn(heanList);
     List<Hean> heanResult = heanServiceImple.findHeansByUId(10000L);
-    verify(heanRepository).findAllByUId(10000L);
     assertEquals(heanResult, heanList);
-    verifyNoMoreInteractions(heanRepository);
   }
 
   /**

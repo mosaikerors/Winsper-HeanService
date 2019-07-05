@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -33,5 +34,17 @@ public class Hean {
     this.latitude=latitude;
     this.height=height;
     this.pics=pics;
+  }
+  public JSONObject ToJSONObject(){
+    JSONObject result = new JSONObject(255,true);
+    result.put("hId",this.hId);
+    result.put("uId",this.uId);
+    result.put("createdTime",this.createdTime);
+    result.put("text",this.text);
+    result.put("longtitude",this.longtitude);
+    result.put("latitude",this.latitude);
+    result.put("height",this.height);
+    result.put("pics",this.pics);
+    return result;
   }
 }

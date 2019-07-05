@@ -21,7 +21,7 @@ public class PictureServiceImple implements PictureService {
 
   @Override
   public Picture findPictureByPId(String pId) {
-    return pictureRepository.findPictureByPId(pId);
+    return pictureRepository.findPictureByPId(pId)!=null?pictureRepository.findPictureByPId(pId):pictureRepository.findPictureByPId("5d1ebb99e5b9b1ac58d09308");
   }
 
 
@@ -42,7 +42,7 @@ public class PictureServiceImple implements PictureService {
       Picture savedFile = pictureRepository.save(picture);
       return baseUrl + savedFile.getPId();
     } else {
-      System.out.println(file.getContentType());
+
       throw new IOException();
     }
   }
