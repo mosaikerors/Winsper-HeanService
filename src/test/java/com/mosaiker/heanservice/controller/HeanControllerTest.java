@@ -1,26 +1,16 @@
 package com.mosaiker.heanservice.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.Picture;
-import com.mosaiker.heanservice.repository.HeanRepository;
 import com.mosaiker.heanservice.service.HeanService;
 import com.mosaiker.heanservice.service.PictureService;
-import com.mosaiker.heanservice.service.serviceImple.HeanServiceImple;
-import com.sun.jmx.snmp.Timestamp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +29,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
+
 
 /**
  * HeanController Tester.
@@ -81,12 +71,12 @@ public class HeanControllerTest {
     when(heanService.findHeansByUId(10000L)).thenReturn(heanList);
 
     JSONObject mockParam = new JSONObject();
-    mockParam.put("uId", "10000");
+    mockParam.put("uId", 10000L);
     String expected1 = "{\"heanArray\":[{\"createdTime\":" + date.getTime()
-        + ",\"text\":\"test hean1\",\"longtitude\":100.1,\"latitude\":100.1,"
-        + "\"height\":100.1,\"pics\":null,\"uid\":10000,\"hid\":\"hean1\"},{\"createdTime\":"
-        + date.getTime() + ",\"text\":\"test hean2\",\"longtitude\":100.1,\"latitude\":100.1,"
-        + "\"height\":100.1,\"pics\":null,\"uid\":10000,\"hid\":\"hean2\"}],\"message\":\"ok\"}";
+        + ",\"text\":\"test hean1\",\"longtitude\":100.1,\"latitude\":100.1,\"height\":100.1,\"pics\":null,\"hid\":\"hean1\",\"uid\":10000},{\"createdTime\":"
+        + date.getTime()
+        + ",\"text\":\"test hean2\",\"longtitude\":100.1,\"latitude\":100.1,\"height\":100.1,\"pics\":null,\"hid\":\"hean2\",\"uid\":10000}],\"message\":\"ok\"}";
+
     mockMvc.perform(MockMvcRequestBuilders.post("/hean/byUId")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON).content(mockParam.toJSONString()))

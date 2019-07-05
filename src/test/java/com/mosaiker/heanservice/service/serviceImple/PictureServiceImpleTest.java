@@ -6,15 +6,12 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 import com.mosaiker.heanservice.entity.Picture;
-import com.mosaiker.heanservice.repository.HeanRepository;
 import com.mosaiker.heanservice.repository.PictureRepository;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import org.bson.types.Binary;

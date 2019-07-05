@@ -2,13 +2,11 @@ package com.mosaiker.heanservice.entity;
 import com.alibaba.fastjson.JSONObject;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.ElementCollection;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document

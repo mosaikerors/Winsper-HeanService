@@ -1,14 +1,12 @@
 package com.mosaiker.heanservice.service.serviceImple;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.repository.HeanRepository;
-import com.mosaiker.heanservice.service.HeanService;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
