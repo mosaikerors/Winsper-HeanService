@@ -1,13 +1,16 @@
 package com.mosaiker.heanservice.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.Picture;
 import com.mosaiker.heanservice.service.HeanService;
 import com.mosaiker.heanservice.service.PictureService;
+import com.mosaiker.heanservice.utils.MyJSONUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,6 +43,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class HeanControllerTest {
 
+  private MyJSONUtil myJSONUtil;
+
   private MockMvc mockMvc;
   @Mock
   private HeanService heanService;
@@ -68,25 +73,28 @@ public class HeanControllerTest {
     Hean hean1 = new Hean("hean1", 10000L, date, "test hean1", 100.1, 100.1, 100.1, null);
     Hean hean2 = new Hean("hean2", 10000L, date, "test hean2", 100.1, 100.1, 100.1, null);
     List<Hean> heanList = Arrays.asList(hean1, hean2);
-    when(heanService.findHeansByUId(10000L)).thenReturn(heanList);
+    JSONArray heanArray1 = new JSONArray();
+    heanArray1.add(hean1.ToJSONObject());
+    heanArray1.add(hean2.ToJSONObject());
 
+    when(heanService.findHeansByUId(10000L)).thenReturn(heanList);
     JSONObject mockParam = new JSONObject();
     mockParam.put("uId", 10000L);
-    String expected1 = "{\"heanArray\":[{\"createdTime\":" + date.getTime()
-        + ",\"text\":\"test hean1\",\"longtitude\":100.1,\"latitude\":100.1,\"height\":100.1,\"pics\":null,\"hid\":\"hean1\",\"uid\":10000},{\"createdTime\":"
-        + date.getTime()
-        + ",\"text\":\"test hean2\",\"longtitude\":100.1,\"latitude\":100.1,\"height\":100.1,\"pics\":null,\"hid\":\"hean2\",\"uid\":10000}],\"message\":\"ok\"}";
 
+    JSONObject expected1=new JSONObject();
+    expected1.put("heanArray",heanArray1);
+    expected1.put("message","ok");
     mockMvc.perform(MockMvcRequestBuilders.post("/hean/byUId")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON).content(mockParam.toJSONString()))
         .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().string(expected1))
         .andDo(MockMvcResultHandlers.print())
         .andReturn();
+    Boolean compare=myJSONUtil.compareTwoJSONObject(expected1,heanController.findAllByUId(mockParam));
+    assertTrue(compare);
 
     mockParam.clear();
-    mockParam.put("uId", "2000");
+    mockParam.put("uId", 2000L);
     when(heanService.findHeansByUId(2000L)).thenReturn(null);
     String expected2 = "<JSONObject><message>not found</message></JSONObject>";
     mockMvc.perform(MockMvcRequestBuilders.post("/hean/byUId")

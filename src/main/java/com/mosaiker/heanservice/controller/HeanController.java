@@ -39,10 +39,10 @@ public class HeanController {
         Long uId = param.getLong("uId");
         List<Hean> heanList = heanService.findHeansByUId(uId);
         if(heanList!=null) {
-            JSONObject result = new JSONObject();
-            JSONArray heanArray = new JSONArray();
+            JSONObject result = new JSONObject(1000000,true);
+            JSONArray heanArray1 = new JSONArray();
             for(Hean hean:heanList){
-                heanArray.add(hean.ToJSONObject());
+                heanArray1.add(hean.ToJSONObject());
             }
             result.put("heanArray", heanList);
             result.put("message", "ok");
@@ -58,7 +58,7 @@ public class HeanController {
     @ResponseBody
     public JSONObject findAll() {
         List<Hean> heanList = heanService.findAllHeans();
-        JSONObject result = new JSONObject();
+        JSONObject result = new JSONObject(1000000,true);
         JSONArray heanArray = new JSONArray();
         for(Hean hean:heanList){
             heanArray.add(hean.ToJSONObject());
