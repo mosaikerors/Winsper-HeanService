@@ -2,7 +2,6 @@ package com.mosaiker.heanservice.entity;
 import com.alibaba.fastjson.JSONObject;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.ElementCollection;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -33,5 +32,17 @@ public class Hean {
     this.latitude=latitude;
     this.height=height;
     this.pics=pics;
+  }
+  public JSONObject ToJSONObject(){
+    JSONObject result = new JSONObject(255,true);
+    result.put("hId",this.hId);
+    result.put("uId",this.uId);
+    result.put("createdTime",this.createdTime);
+    result.put("text",this.text);
+    result.put("longtitude",this.longtitude);
+    result.put("latitude",this.latitude);
+    result.put("height",this.height);
+    result.put("pics",this.pics);
+    return result;
   }
 }

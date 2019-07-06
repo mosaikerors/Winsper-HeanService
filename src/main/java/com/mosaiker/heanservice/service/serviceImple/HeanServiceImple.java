@@ -14,7 +14,7 @@ public class HeanServiceImple implements HeanService {
   private HeanRepository heanRepository;
 
   public List<Hean> findHeansByUId(Long uId) {
-    return heanRepository.findAllByUId(uId);
+    return heanRepository.findAllByUId(uId).isEmpty()?null:heanRepository.findAllByUId(uId);
   }
 
   public List<Hean> findAllHeans() {
