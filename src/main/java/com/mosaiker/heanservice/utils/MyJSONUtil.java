@@ -1,59 +1,10 @@
 package com.mosaiker.heanservice.utils;
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Date;
 
-import org.testng.annotations.Test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 public class MyJSONUtil {
-  public static <T> T initSelfFromJSONObject(Class<T> clazz,
-      JSONObject parameterJSON) {
-    try {
-      Field[] fields = clazz.getDeclaredFields();
-      T t = clazz.newInstance();
-      for (Field f : fields) {
-        f.setAccessible(true);
-        f.set(t, getValueOfTypeTFromJSONObject(f.getType(), f.getName(),parameterJSON ));
-      }
-      return t;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  private static <T> T getValueOfTypeTFromJSONObject(Class<T>clazz,String key,JSONObject jo) throws Exception{
-    if (clazz.equals(Integer.class)) {
-      return (T) jo.getInteger(key);
-    }else if(clazz.equals(Float.class)){
-      return (T) jo.getFloat(key);
-    }else if(clazz.equals(Double.class)){
-      return(T)jo.getDouble(key);
-    }else if(clazz.equals(String.class)) {
-      return (T)jo.getString(key);
-    }else if(clazz.equals(BigDecimal.class)){
-      return (T)jo.getBigDecimal(key);
-    }else if(clazz.equals(Boolean.class)){
-      return (T)jo.getBoolean(key);
-    }else if(clazz.equals(Date.class)){
-      return (T)jo.getDate(key);
-    }else if(clazz.equals(Long.class)){
-      return (T)jo.getLong(key);
-    }else if(clazz.equals(JSONArray.class)){
-      return (T)jo.getJSONArray(key);
-    }else if(clazz.equals(JSONObject.class)){
-      return (T)jo.getJSONObject(key);
-    }else if(clazz.equals(Timestamp.class)){
-      return (T)jo.getTimestamp(key);
-    }else {
-      throw new Exception("cannot get any object from fastjson.JSONObject of Type:"+clazz.getSimpleName());
-    }
-  }
-
   /**
    * @function 比较两个JSONObject的key-value对的个数,内容是否一致---忽略顺序
    * @param json1
@@ -178,55 +129,5 @@ public class MyJSONUtil {
     }
     return true;
   }
-  @Test
-  public void fff() {
-    JSONObject jo1 = new JSONObject();
-    jo1.put("abc", "abc");
-    jo1.put("cba", "cba");
-    jo1.put("jo", jo1.toString());
-
-    JSONObject jo2 = new JSONObject();
-    jo2.put("cba", "cba");
-    jo2.put("abc", "abc");
-    jo2.put("jo", jo2.toString());
-
-    System.err.println(jo1.equals(jo2));
-    System.err.println(compareTwoJSONObject(jo1, jo2));
-  }
-
-  @Test
-  public void f() {
-    JSONObject aJsonObject = new JSONObject();
-    JSONObject bJsonObject = new JSONObject();
-
-    JSONObject cJsonObject = new JSONObject();
-    cJsonObject.put("c", "c");
-    cJsonObject.put("d", "d");
-
-    JSONArray eArray = new JSONArray();
-    eArray.add("e");
-    eArray.add("f");
-    eArray.add(1);
-
-    aJsonObject.put("a", "a");
-    aJsonObject.put("c", cJsonObject);
-    aJsonObject.put("b", "b");
-    aJsonObject.put("e", eArray);
-
-    bJsonObject.put("b", "b");
-    bJsonObject.put("a", "a");
-
-    JSONObject dJsonObject = new JSONObject();
-    dJsonObject.put("d", "d");
-    dJsonObject.put("c", "c");
-    bJsonObject.put("c",dJsonObject);
-
-    JSONArray fArray = new JSONArray();
-    fArray.add("f");
-    fArray.add("e");
-    fArray.add(1);
-    bJsonObject.put("e", fArray);
-
-    System.err.println(compareTwoJSONObject(aJsonObject, bJsonObject));
-  }
+  
 }
