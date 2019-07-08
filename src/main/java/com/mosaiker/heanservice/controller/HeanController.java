@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping(value = "/hean")
 public class HeanController {
 
     @Autowired
