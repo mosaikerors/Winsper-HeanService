@@ -27,7 +27,7 @@ public class HeanController {
     @Autowired
     private PictureService pictureService;
 
-    private static final String baseUrl = "http://47.103.0.246:7190/hean/pictures/get/";
+    private static final String baseUrl = "http://47.103.0.246:7190/pictures/get/";
 
     @Autowired
     private HeanService heanService;
