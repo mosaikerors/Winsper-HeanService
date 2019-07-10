@@ -69,10 +69,9 @@ public class HeanController {
         return result;
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{hId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public JSONObject deleteHean(@RequestBody JSONObject param) {
-        String hId = param.getString("hId");
+    public JSONObject deleteHean(@PathVariable String hId) {
         Boolean isDeleted = heanService.deleteByHId(hId);
         JSONObject result = new JSONObject();
         if (isDeleted) {
