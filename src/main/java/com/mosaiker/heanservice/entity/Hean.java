@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Hean {
   @Id
-  @GeneratedValue
   private String hId;
   private Long uId;
   private Date createdTime; // 上传时间
@@ -46,5 +46,10 @@ public class Hean {
     result.put("height",this.height);
     result.put("pics",this.pics);
     return result;
+  }
+
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public String gethId() {
+    return this.hId;
   }
 }
