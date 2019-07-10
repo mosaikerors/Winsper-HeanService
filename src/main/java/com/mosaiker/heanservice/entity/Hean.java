@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Hean {
   @Id
+  @GeneratedValue
   private String hId;
   private Long uId;
   private Date createdTime; // 上传时间
