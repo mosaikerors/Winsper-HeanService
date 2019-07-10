@@ -84,7 +84,7 @@ public class HeanControllerTest {
     JSONObject expected1=new JSONObject();
     expected1.put("heanArray",heanArray1);
     expected1.put("message","ok");
-    mockMvc.perform(MockMvcRequestBuilders.post("/hean/byUId")
+    mockMvc.perform(MockMvcRequestBuilders.post("/byUId")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON).content(mockParam.toJSONString()))
         .andExpect(MockMvcResultMatchers.status().isOk())
@@ -97,7 +97,7 @@ public class HeanControllerTest {
     mockParam.put("uId", 2000L);
     when(heanService.findHeansByUId(2000L)).thenReturn(null);
     String expected2 = "<JSONObject><message>not found</message></JSONObject>";
-    mockMvc.perform(MockMvcRequestBuilders.post("/hean/byUId")
+    mockMvc.perform(MockMvcRequestBuilders.post("/byUId")
         .contentType(MediaType.APPLICATION_JSON).content(mockParam.toJSONString()))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().string(expected2))
@@ -121,7 +121,7 @@ public class HeanControllerTest {
             + ",\"text\":\"test hean1\",\"longtitude\":100.1,\"latitude\":100.1,\"height\":100.1,\"pics\":null},{\"hId\":\"hean2\",\"uId\":10000,\"createdTime\":"
             + date.getTime()
             + ",\"text\":\"test hean2\",\"longtitude\":100.1,\"latitude\":100.1,\"height\":100.1,\"pics\":null}],\"message\":\"ok\"}";
-    mockMvc.perform(MockMvcRequestBuilders.get("/hean/all")
+    mockMvc.perform(MockMvcRequestBuilders.get("/all")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().string(expected1))
@@ -141,7 +141,7 @@ public class HeanControllerTest {
     JSONObject mockParam = new JSONObject();
     mockParam.put("hId", "hean2");
     String expected1 = "{\"message\":\"not found\"}";
-    mockMvc.perform(MockMvcRequestBuilders.delete("/hean/delete")
+    mockMvc.perform(MockMvcRequestBuilders.delete("/delete/hean2")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON).content(mockParam.toJSONString()))
         .andExpect(MockMvcResultMatchers.status().isOk())
@@ -152,7 +152,7 @@ public class HeanControllerTest {
     when(heanService.deleteByHId("hean1")).thenReturn(true);
     mockParam.put("hId", "hean1");
     String expected2 = "{\"message\":\"ok\"}";
-    mockMvc.perform(MockMvcRequestBuilders.delete("/hean/delete")
+    mockMvc.perform(MockMvcRequestBuilders.delete("/delete/hean1")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON).content(mockParam.toJSONString()))
         .andExpect(MockMvcResultMatchers.status().isOk())
@@ -231,14 +231,14 @@ public class HeanControllerTest {
     when(pictureService.findPictureByPId("pic2")).thenReturn(not_found);
     byte[] expected2 = null;
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/hean/pictures/get/pic1")
+    mockMvc.perform(MockMvcRequestBuilders.get("/pictures/get/pic1")
         .accept(MediaType.IMAGE_JPEG_VALUE))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().string("pic1"))
         .andDo(MockMvcResultHandlers.print())
         .andReturn();
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/hean/pictures/get/pic2")
+    mockMvc.perform(MockMvcRequestBuilders.get("/pictures/get/pic2")
         .accept(MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().string("not_found"))
