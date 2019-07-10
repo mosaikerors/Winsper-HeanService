@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,8 @@ public class HeanController {
     @Autowired
     private PictureService pictureService;
 
-    private static final String baseUrl = "http://47.103.0.246:7190/pictures/get/";
+    @Value("${picturesBaseUrl}")
+    String baseUrl;
 
     @Autowired
     private HeanService heanService;

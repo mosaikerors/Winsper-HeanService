@@ -3,6 +3,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.ElementCollection;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Hean {
   @Id
+  @GeneratedValue
   private String hId;
   private Long uId;
   private Date createdTime; // 上传时间
