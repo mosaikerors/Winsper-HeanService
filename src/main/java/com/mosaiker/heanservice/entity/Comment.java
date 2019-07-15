@@ -1,9 +1,11 @@
 package com.mosaiker.heanservice.entity;
-
+/*
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Id;
 
 public class Comment extends HeanComment{
+
     private String hId;
     private Long uId;
     private String username;
@@ -59,3 +61,4 @@ public class Comment extends HeanComment{
         this.hId = hId;
     }
 }
+*/

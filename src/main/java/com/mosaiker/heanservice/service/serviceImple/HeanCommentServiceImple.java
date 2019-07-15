@@ -1,9 +1,12 @@
 package com.mosaiker.heanservice.service.serviceImple;
 
-import com.mosaiker.heanservice.entity.Comment;
+//import com.mosaiker.heanservice.entity.Comment;
+import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.HeanComment;
 import com.mosaiker.heanservice.repository.HeanCommentRepository;
+import com.mosaiker.heanservice.repository.HeanRepository;
 import com.mosaiker.heanservice.service.HeanCommentService;
+import com.mosaiker.heanservice.service.HeanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +20,14 @@ public class HeanCommentServiceImple implements HeanCommentService {
 
     @Autowired
     private HeanCommentRepository heanCommentRepository;
+    @Autowired
+    private HeanRepository heanRepository;
 
     @Override
-    public HeanComment findHeanCommentsOrNew(String hId) {
-        Optional<HeanComment> bookComment = heanCommentRepository.findHeanCommentByHId(hId);
-        HeanComment bc = null;
-        if (!bookComment.isPresent()) {
-            bc = new HeanComment();
-            bc.setHId(hId);
-        } else {
-            bc = bookComment.get();
-        }
-        return bc;
-    }
+    public HeanComment findHeanCommentByCId(String cId) {
+        HeanComment commented = heanCommentRepository.findHeanCommentByCommmentId(cId);
+        return commented;
+    }/*
 
     @Override
     public List<Comment> findComments(String hId) {
@@ -44,25 +42,25 @@ public class HeanCommentServiceImple implements HeanCommentService {
         bc.setReplies(comments);
         heanCommentRepository.save(bc);
         return "ok";
-    }
+    }*/
 
     //给一个HeanComment加一个子Comment
     @Override
-    public void saveComment(HeanComment oldComment, Long uId, String username, String content) {
-        //新建评论
-        Comment comment = new Comment();
-        comment.setUserId(uId);
-        comment.setUsername(username);
-        comment.setContent(content);
-        comment.setCommentTime(new Date().getTime());
-        List<Comment> newReplies = oldComment.getReplies();
-        if (newReplies == null) {
-            newReplies = new LinkedList<>();
+    public String saveComment(HeanComment newComment) {
+        heanCommentRepository.save(newComment);
+        if(newComment.getTargetCommentId()!=null) {
+            HeanComment commented = heanCommentRepository
+                .findHeanCommentByCommmentId(newComment.getTargetCommentId());
+            commented.addReply(newComment.getCommmentId());
+            heanCommentRepository.save(commented);
         }
-        newReplies.add(comment);
-        oldComment.setReplies(newReplies);
-    }
+        Hean comed=heanRepository.findByHId(newComment.getHId());
+        comed.addComment(newComment.getHId());
+        heanRepository.save(comed);
 
+        return "ok";
+    }
+/*
     //任意一级的回复
     //有点难啊，要搜索树，级联保存
     @Override
@@ -87,5 +85,5 @@ public class HeanCommentServiceImple implements HeanCommentService {
         }
         heanCommentRepository.save(bookComment);
         return "ok";
-    }
+    }*/
 }

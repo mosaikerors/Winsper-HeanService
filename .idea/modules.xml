@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Winsper-HeanService.iml" filepath="$PROJECT_DIR$/Winsper-HeanService.iml" />
-      <module fileurl="file://$PROJECT_DIR$/user-service.iml" filepath="$PROJECT_DIR$/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hean-service.iml" filepath="$PROJECT_DIR$/hean-service.iml" />
     </modules>
   </component>
 </project>
