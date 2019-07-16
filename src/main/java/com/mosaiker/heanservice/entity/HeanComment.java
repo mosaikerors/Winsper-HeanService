@@ -2,8 +2,6 @@ package com.mosaiker.heanservice.entity;
 
 import java.util.ArrayList;
 import javax.persistence.ElementCollection;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,7 +12,6 @@ import java.util.List;
 public class HeanComment {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private String CommmentId;
   private String hId;
   private Long uId;
