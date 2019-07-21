@@ -10,5 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserInfoService {
   @RequestMapping(method = RequestMethod.GET, value = "/getSimpleInfo")
   JSONObject getSimpleInfo(@RequestParam Long uId);
-
+  @RequestMapping(method = RequestMethod.GET, value = "/getFollowings")
+  JSONObject getFollowings(@RequestParam Long uId);
 }

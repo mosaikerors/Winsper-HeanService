@@ -107,6 +107,7 @@ public class Hean {
     result.put("starCount",this.starUIds.size());
     result.put("hasLiked",this.likeUIds.contains(uId));
     result.put("hasStared",this.starUIds.contains(uId));
+
     return result;
   }
 

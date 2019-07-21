@@ -1,18 +1,23 @@
 package com.mosaiker.heanservice.service;
 
 //import com.mosaiker.heanservice.entity.Comment;
+import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.entity.HeanComment;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface HeanCommentService {
-    public HeanComment findHeanCommentByCId(String cId);
+    HeanComment findHeanCommentByCId(String cId);
 
     //public List<Comment> findComments(String hId);
 
     //public String saveHeanComments(String hId, List<Comment> comments);
 
-    public String saveComment(HeanComment newComment);
+    Integer saveComment(HeanComment newComment);
+
+    JSONObject getComJSONObject(String cId);
 
     //public String saveReply(String hId, List<Integer> commentIndex, Long uId, String username, String content);
 }

@@ -65,28 +65,18 @@ public class HeanCommentController {
       Long uId = param.getLong("uId");
       String targetCommentId = param.getString("targetCommentId");
       String content = param.getString("content");
+      if(content.length()<=0){
+        throw new Exception();
+      }
       HeanComment newComment = new HeanComment(hId, uId, content, new Date().getTime(),
           targetCommentId, new ArrayList<String>());
-      String result = heanCommentService.saveComment(newComment);
-      com.put("commentId", newComment.getCommmentId());
-      com.put("commenter", userInfoService.getSimpleInfo(uId).get("username"));
-      if (targetCommentId != null) {
-        Long commentedUId = heanCommentService.findHeanCommentByCId(targetCommentId)
-            .getuId();
-        com.put("commented", userInfoService.getSimpleInfo(commentedUId).get("username"));
-      } else {
-        com.put("commented", null);
-      }
-      com.put("time", newComment.getCommentTime());
-      com.put("content", content);
-
-      ret.put("message", result);
-      ret.put("comment", com);
+      Integer result = heanCommentService.saveComment(newComment);
+      ret.put("rescode", result);
       return ret;
 
     } catch (Exception e) {
       JSONObject ret = new JSONObject();
-      ret.put("message", "error");
+      ret.put("rescode", 3);
       return ret;
     }
   }

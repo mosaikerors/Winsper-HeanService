@@ -1,9 +1,11 @@
 package com.mosaiker.heanservice.service.serviceImple;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.repository.HeanRepository;
 import com.mosaiker.heanservice.repository.MarkRepository;
+import com.mosaiker.heanservice.service.HeanCommentService;
 import com.mosaiker.heanservice.service.HeanService;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,8 @@ public class HeanServiceImple implements HeanService {
   private HeanRepository heanRepository;
   @Autowired
   private MarkRepository markRepository;
-
+  @Autowired
+  private HeanCommentService heanCommentService;
   public List<Hean> findHeansByUId(Long uId) {
     return heanRepository.findAllByUId(uId).isEmpty()?null:heanRepository.findAllByUId(uId);
   }
@@ -74,5 +77,14 @@ public class HeanServiceImple implements HeanService {
   }
   public Hean findHeanByHId(String hId){
     return heanRepository.findByHId(hId);
+  }
+
+  public JSONArray allComments(String hId){
+    Hean hean = heanRepository.findByHId(hId);
+    JSONArray coms = new JSONArray();
+    for(String cId:hean.getCommentIds()){
+      coms.add(heanCommentService.getComJSONObject(cId));
+    }
+    return coms;
   }
 }

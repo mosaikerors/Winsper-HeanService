@@ -1,5 +1,7 @@
 package com.mosaiker.heanservice.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.entity.Hean;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -15,4 +17,5 @@ public interface HeanService {
   Boolean toggleLike(String hId,Long uId);
   Boolean toggleStar(String hId,Long uId);
   Hean findHeanByHId(String hId);
+  JSONArray allComments(String hId);
 }
