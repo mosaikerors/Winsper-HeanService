@@ -29,14 +29,12 @@ steps:
 
 - name: deploy
   image: appleboy/drone-ssh
-  volumes:
-  - name: configuration
-    path: /root/.docker
   settings:
     host: 10.0.0.98
     username: root
     key: 
       from_secret: private_key
+    command_timeout: 3m
     script:
     - cd /root/Winsper/drone-tmp/target
     - cp ../Dockerfile .
@@ -51,6 +49,3 @@ volumes:
 - name: dependency
   host:
     path: /root/.m2
-- name: configuration
-  host:
-    path: /root/.docker
