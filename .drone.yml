@@ -3,7 +3,7 @@ name: Winsper-HeanService
 
 steps:
 - name: test
-  image: mysql
+  image: maven
   volumes:
   - name: dependency
     path: /root/.m2
