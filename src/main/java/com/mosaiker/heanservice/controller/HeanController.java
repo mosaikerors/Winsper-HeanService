@@ -1,5 +1,7 @@
 package com.mosaiker.heanservice.controller;
 
+import static java.lang.Math.abs;
+
 import com.alibaba.fastjson.JSONArray;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.Picture;
@@ -7,6 +9,7 @@ import com.mosaiker.heanservice.service.HeanCommentService;
 import com.mosaiker.heanservice.service.HeanService;
 import com.mosaiker.heanservice.service.PictureService;
 import com.mosaiker.heanservice.service.UserInfoService;
+import com.mosaiker.heanservice.utils.Geohash;
 import com.netflix.discovery.converters.Auto;
 import java.util.Date;
 import java.util.List;
@@ -41,10 +44,10 @@ public class HeanController {
   @Autowired
   private HeanService heanService;
 
-  @RequestMapping(value = "/point", method = RequestMethod.GET)
+  @RequestMapping(value = "/point/all", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findAllPoint() {
-    List<Hean> heanList = heanService.findAllHeans();
+  public JSONObject findAllPoint(@RequestParam Double lon,@RequestParam Double lat) {
+    List<Hean> heanList = heanService.findAllHeans(lon,lat);
     return points(heanList);
   }
 
@@ -72,6 +75,20 @@ public class HeanController {
     return points(heans);
   }
 
+  @RequestMapping(value = "/point/mutualFollow", method = RequestMethod.GET)
+  @ResponseBody
+  public JSONObject findMutualFollowPoint(@RequestParam Long uId) {
+    List<Long> followings = userInfoService.getFollowings(uId).getObject("following", List.class);
+    List<Long> followers = userInfoService.getFollowers(uId).getObject("follower",List.class);
+    followings.retainAll(followers);
+    List<Hean> heans = new ArrayList<>();
+    for (Long Id : followings) {
+      List<Hean> list = heanService.findHeansByUId(Id);
+      heans.removeAll(list);
+      heans.addAll(list);
+    }
+    return points(heans);
+  }
   @RequestMapping(value = "/card", method = RequestMethod.GET)
   @ResponseBody
   public JSONObject findOneCardHean(@RequestParam String hId, @RequestParam Long uId) {
@@ -86,19 +103,24 @@ public class HeanController {
 
   @RequestMapping(value = "/detailed", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestParam Long uId) {
+  public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestParam Long uId,@RequestParam Double lon,@RequestParam Double lat) {
     JSONObject info = userInfoService.getSimpleInfo(uId);
     Hean dest = heanService.findHeanByHId(hId);
     JSONObject destDetail = dest.ToDetail(uId);
-    destDetail.put("avatar", info.get("avatarUrl"));
-    destDetail.put("username", info.get("username"));
-    JSONObject result = new JSONObject(true);
+    if(abs(new Geohash().encode(lon, lat)-dest.getGeoStr())<=4) {
+      destDetail.put("avatar", info.get("avatarUrl"));
+      destDetail.put("username", info.get("username"));
+      JSONObject result = new JSONObject(true);
 
-    result.put("rescode", 0);
-    result.put("hean", destDetail);
-    result.put("comments", heanService.allComments(hId));
+      result.put("rescode", 0);
+      result.put("hean", destDetail);
+      result.put("comments", heanService.allComments(hId));
 
-    return result;
+      return result;
+    }else{
+      destDetail.put("rescode",3);//位置不够近
+      return destDetail;
+    }
   }
 
 
@@ -158,19 +180,19 @@ public class HeanController {
   }
 
 
-  @RequestMapping(value = "/all", method = RequestMethod.GET)
-  @ResponseBody
-  public JSONObject findAll() {
-    List<Hean> heanList = heanService.findAllHeans();
-    JSONObject result = new JSONObject(true);
-    JSONArray heanArray = new JSONArray();
-    for (Hean hean : heanList) {
-      heanArray.add(hean.ToJSONObject());
-    }
-    result.put("heanArray", heanArray);
-    result.put("rescode", 0);
-    return result;
-  }
+//  @RequestMapping(value = "/all", method = RequestMethod.GET)
+//  @ResponseBody
+//  public JSONObject findAll() {
+//    List<Hean> heanList = heanService.findAllHeans();
+//    JSONObject result = new JSONObject(true);
+//    JSONArray heanArray = new JSONArray();
+//    for (Hean hean : heanList) {
+//      heanArray.add(hean.ToJSONObject());
+//    }
+//    result.put("heanArray", heanArray);
+//    result.put("rescode", 0);
+//    return result;
+//  }
 
   @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
   @ResponseBody

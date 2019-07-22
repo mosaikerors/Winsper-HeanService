@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public interface HeanService {
   List<Hean>  findHeansByUId(Long uId);
   //List<Hean> findHeansByTag(String tag);
-  List<Hean>  findAllHeans();
+  List<Hean>  findAllHeans(Double lon,Double lat);
   Boolean deleteByHId(String hId);
   Hean upload(Hean hean);
   List<Hean> findAllMarkedByUId(Long uId);

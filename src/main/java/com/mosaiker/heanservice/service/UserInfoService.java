@@ -12,4 +12,6 @@ public interface UserInfoService {
   JSONObject getSimpleInfo(@RequestParam Long uId);
   @RequestMapping(method = RequestMethod.GET, value = "/getFollowings")
   JSONObject getFollowings(@RequestParam Long uId);
+  @RequestMapping(method = RequestMethod.GET,value = "/getFollowers")
+  JSONObject getFollowers(@RequestParam Long uId);
 }
