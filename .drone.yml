@@ -34,7 +34,7 @@ steps:
     username: root
     key: 
       from_secret: private_key
-    command_timeout: 3m
+    command_timeout: 5m
     script:
     - cd /root/Winsper/drone-tmp/target
     - cp ../Dockerfile .
