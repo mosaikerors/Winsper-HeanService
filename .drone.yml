@@ -12,6 +12,7 @@ steps:
   commands:
   - cd /usr/share/maven/ref
   - ls
+  - cat settings-docker.xml
   - mvn clean
   - mvn package -Dmaven.test.skip=true
   - echo "test and package hean-service completed 🙂🙂🙂"
