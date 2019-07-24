@@ -103,11 +103,10 @@ public class HeanController {
 
   @RequestMapping(value = "/detailed", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestParam Long uId,@RequestParam Double lon,@RequestParam Double lat) {
+  public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestParam Long uId) {
     JSONObject info = userInfoService.getSimpleInfo(uId);
     Hean dest = heanService.findHeanByHId(hId);
     JSONObject destDetail = dest.ToDetail(uId);
-    if(abs(new Geohash().encode(lon, lat)-dest.getGeoStr())<=4) {
       destDetail.put("avatar", info.get("avatarUrl"));
       destDetail.put("username", info.get("username"));
       JSONObject result = new JSONObject(true);
@@ -117,10 +116,7 @@ public class HeanController {
       result.put("comments", heanService.allComments(hId));
 
       return result;
-    }else{
-      destDetail.put("rescode",3);//位置不够近
-      return destDetail;
-    }
+  
   }
 
 
