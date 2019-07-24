@@ -2,7 +2,9 @@ package com.mosaiker.heanservice.service.serviceImple;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.service.UserInfoService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserInfoServiceImple implements UserInfoService {
     @Override
     public JSONObject getSimpleInfo(Long uId) {
