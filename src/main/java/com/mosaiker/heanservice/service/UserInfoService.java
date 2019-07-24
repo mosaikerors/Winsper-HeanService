@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "USER-SERVICE")
+@FeignClient(value = "user-service")
 public interface UserInfoService {
   @RequestMapping(method = RequestMethod.GET, value = "/getSimpleInfo")
   JSONObject getSimpleInfo(@RequestParam Long uId);
