@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableEurekaClient
 @EnableHystrix
 @RefreshScope
+@EnableFeignClients
 public class HeanServiceApplication {
 
     public static void main(String[] args) {
