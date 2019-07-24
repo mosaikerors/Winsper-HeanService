@@ -36,7 +36,7 @@ public class HeanController {
   private PictureService pictureService;
   @Autowired
   private HeanCommentService heanCommentService;
-
+  @Autowired
   private UserInfoService userInfoService;
   @Value("${picturesBaseUrl}")
   String baseUrl;
