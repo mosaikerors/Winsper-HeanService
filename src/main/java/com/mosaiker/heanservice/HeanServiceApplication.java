@@ -13,6 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableHystrix
 @RefreshScope
+@EnableFeignClients
 public class HeanServiceApplication {
 
     public static void main(String[] args) {
