@@ -38,7 +38,7 @@ steps:
       script:
         - cd /root/test/drone-tmp/target
         - cp ../Dockerfile .
-        - docker build -t DeeEll-X/winsper-hean:
+        - docker build -t DeeEll-X/winsper-hean .
 
 
 volumes:
