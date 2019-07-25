@@ -36,7 +36,7 @@ steps:
         from_secret: private_key
       command_timeout: 5m
       script:
-        - cd /root/test/Winsper/winsper-hean
+        - cd /root/test/Winsper/winsper-hean/target
         - cp ../Dockerfile .
         - docker rm -f deeell-test/winsper-hean
         - docker build -t deeell-test/winsper-hean .
