@@ -22,7 +22,7 @@ steps:
       key:
         from_secret: private_key
       rm: true
-      target: /root/test/drone-tmp
+      target: /root/test/Winsper/winsper-hean
       source:
         - target/hean-service-0.0.1-SNAPSHOT.jar
         - Dockerfile
@@ -36,8 +36,9 @@ steps:
         from_secret: private_key
       command_timeout: 5m
       script:
-        - cd /root/test/drone-tmp/target
+        - cd /root/test/Winsper/winsper-hean
         - cp ../Dockerfile .
+        - docker rm -f deeell-test/winsper-hean
         - docker build -t deeell-test/winsper-hean .
 
 
