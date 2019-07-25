@@ -1,5 +1,6 @@
 package com.mosaiker.heanservice.entity;
 import com.alibaba.fastjson.JSONObject;
+import com.mosaiker.heanservice.utils.Geohash;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ public class Hean {
   private List<Long> starUIds;
   @ElementCollection
   private List<String> commentIds;
+  private Long geoStr;
   public Hean(Long uId,Date createdTime,String text,double longtitude,double latitude,double height,List<String> pics){
     this.uId=uId;
     this.createdTime=createdTime;
@@ -42,6 +44,7 @@ public class Hean {
     this.likeUIds = new ArrayList<>();
     this.starUIds = new ArrayList<>();
     this.commentIds = new ArrayList<>();
+    this.geoStr = new Geohash().encode(latitude,longtitude);
   }
   public JSONObject ToJSONObject(){
     JSONObject result = new JSONObject(true);
@@ -107,6 +110,7 @@ public class Hean {
     result.put("starCount",this.starUIds.size());
     result.put("hasLiked",this.likeUIds.contains(uId));
     result.put("hasStared",this.starUIds.contains(uId));
+
     return result;
   }
 
