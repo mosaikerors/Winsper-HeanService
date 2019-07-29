@@ -39,6 +39,7 @@ steps:
         - cd /root/test/Winsper/winsper-hean/target
         - cp ../Dockerfile .
         - docker rm -f deeell-test/winsper-hean
+        - docker rm -f gusabary/winsper-hean
         - docker build -t gusabary/winsper-hean .
         - docker login
         - docker push gusabary/winsper-hean
