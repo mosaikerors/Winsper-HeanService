@@ -40,8 +40,7 @@ steps:
         - cp ../Dockerfile .
         - docker rm -f deeell-test/winsper-hean
         - docker build -t deeell-test/winsper-hean .
-        - docker login
-        - docker push deeell-test/wisnper-hean
+
 
 
 volumes:
