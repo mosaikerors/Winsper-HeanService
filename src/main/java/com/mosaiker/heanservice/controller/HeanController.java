@@ -64,7 +64,7 @@ public class HeanController {
 
   @RequestMapping(value = "/point/follower", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findFollowerPoint(@RequestParam Long uId) {
+  public JSONObject findFollowerPoint(@RequestHeader("uId") Long uId) {
     List<Long> followings = userInfoService.getFollowings(uId).getObject("following", List.class);
     List<Hean> heans = new ArrayList<>();
     for (Long Id : followings) {
@@ -77,7 +77,7 @@ public class HeanController {
 
   @RequestMapping(value = "/point/mutualFollow", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findMutualFollowPoint(@RequestParam Long uId) {
+  public JSONObject findMutualFollowPoint(@RequestHeader("uId") Long uId) {
     List<Long> followings = userInfoService.getFollowings(uId).getObject("following", List.class);
     List<Long> followers = userInfoService.getFollowers(uId).getObject("follower",List.class);
     followings.retainAll(followers);
@@ -91,7 +91,7 @@ public class HeanController {
   }
   @RequestMapping(value = "/card", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findOneCardHean(@RequestParam String hId, @RequestParam Long uId) {
+  public JSONObject findOneCardHean(@RequestParam String hId, @RequestHeader("uId") Long uId) {
     Hean dest = heanService.findHeanByHId(hId);
     JSONObject result = new JSONObject(true);
 
@@ -103,7 +103,7 @@ public class HeanController {
 
   @RequestMapping(value = "/detailed", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestParam Long uId) {
+  public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestHeader("uId") Long uId) {
     JSONObject info = userInfoService.getSimpleInfo(uId);
     Hean dest = heanService.findHeanByHId(hId);
     JSONObject destDetail = dest.ToDetail(uId);
@@ -116,13 +116,13 @@ public class HeanController {
       result.put("comments", heanService.allComments(hId));
 
       return result;
-  
+
   }
 
 
   @RequestMapping(value = "/cardlist", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findAllByUId(@RequestParam Long owner, @RequestParam Long viewer) {
+  public JSONObject findAllByUId(@RequestParam Long owner, @RequestHeader("uId") Long viewer) {
     Boolean isPublic = userInfoService.getSimpleInfo(owner).getBoolean("isHeanPublic");
     if (owner.equals(viewer) || isPublic) {
       List<Hean> heanList = heanService.findHeansByUId(owner);
@@ -150,7 +150,7 @@ public class HeanController {
 
   @RequestMapping(value = "/collection", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject findStaredByUId(@RequestParam Long owner, @RequestParam Long viewer) {
+  public JSONObject findStaredByUId(@RequestParam Long owner, @RequestHeader("uId") Long viewer) {
     Boolean isPublic = userInfoService.getSimpleInfo(owner).getBoolean("isCollectionPublic");
     if (owner.equals(viewer) || isPublic) {
       List<Hean> heanList = heanService.findHeansByUId(owner);
@@ -192,7 +192,7 @@ public class HeanController {
 
   @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
   @ResponseBody
-  public JSONObject deleteHean(@RequestParam String hId, @RequestParam Long uId) {
+  public JSONObject deleteHean(@RequestParam String hId,@RequestHeader("uId") Long uId) {
     Hean gotH = heanService.findHeanByHId(hId);
     JSONObject result = new JSONObject();
     if (gotH.getUId().equals(uId)) {
@@ -265,9 +265,8 @@ public class HeanController {
 
   @RequestMapping(value = "/toggleLike", method = RequestMethod.POST)
   @ResponseBody//点赞或取消点赞函
-  public JSONObject toggleLike(@RequestBody JSONObject param) {
+  public JSONObject toggleLike(@RequestBody JSONObject param,@RequestHeader("uId") Long uId) {
     JSONObject result = new JSONObject();
-    Long uId = param.getLong("uId");
     String hId = param.getString("hId");
     Boolean cur = heanService.toggleLike(hId, uId);
     result.put("rescode", 0);
@@ -278,9 +277,8 @@ public class HeanController {
 
   @RequestMapping(value = "/toggleStar", method = RequestMethod.POST)
   @ResponseBody//收藏或取消收藏函
-  public JSONObject toggleStar(@RequestBody JSONObject param) {
+  public JSONObject toggleStar(@RequestBody JSONObject param,@RequestHeader("uId") Long uId) {
     JSONObject result = new JSONObject();
-    Long uId = param.getLong("uId");
     String hId = param.getString("hId");
     Boolean cur = heanService.toggleStar(hId, uId);
     result.put("message", "ok");
