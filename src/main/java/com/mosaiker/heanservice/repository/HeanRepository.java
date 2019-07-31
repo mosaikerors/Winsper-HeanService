@@ -1,6 +1,7 @@
 package com.mosaiker.heanservice.repository;
 
 import com.mosaiker.heanservice.entity.Hean;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -12,5 +13,6 @@ public interface HeanRepository extends MongoRepository<Hean,String> {
   List<Long> findStarUIdsByHId(String hId);
   Hean findByHId(String hId);
   List<Hean> findAllByGeoStrBetween(Long from,Long to);
+  List<Hean> findAllByCreatedTimeAfter(Date time);
 
 }

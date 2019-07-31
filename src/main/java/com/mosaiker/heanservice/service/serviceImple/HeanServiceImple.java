@@ -46,20 +46,27 @@ public class HeanServiceImple implements HeanService {
     }
     return heanList;
   }
-  public Boolean toggleLike(String hId,Long uId){
+  public Boolean setLike(String hId,Long uId){
     List<Long> likelist = heanRepository.findLikeUIdsByHId(hId);
-    if(likelist.contains(uId)) {
-      likelist.remove(uId);
-      heanRepository.findByHId(hId).setLikeUIds(likelist);
-      return Boolean.FALSE;
-    }
-    else {
+    if(!likelist.contains(uId)) {
       likelist.add(uId);
       heanRepository.findByHId(hId).setLikeUIds(likelist);
-      return Boolean.TRUE;
     }
+    return Boolean.TRUE;
   }
-  public Boolean toggleStar(String hId,Long uId){
+  public Boolean setStar(String hId,Long uId){
+    List<Long> starlist = heanRepository.findStarUIdsByHId(hId);
+    List<String> mystar = markRepository.findByUId(uId).getMarks();
+    if(!starlist.contains(uId)) {
+      mystar.add(hId);
+      starlist.add(uId);
+      heanRepository.findByHId(hId).setStarUIds(starlist);
+      markRepository.findByUId(uId).setMarks(mystar);
+    }
+    return Boolean.TRUE;
+  }
+
+  public Boolean cancelStar(String hId,Long uId){
     List<Long> starlist = heanRepository.findStarUIdsByHId(hId);
     List<String> mystar = markRepository.findByUId(uId).getMarks();
     if(starlist.contains(uId)) {
@@ -67,16 +74,10 @@ public class HeanServiceImple implements HeanService {
       starlist.remove(uId);
       heanRepository.findByHId(hId).setStarUIds(starlist);
       markRepository.findByUId(uId).setMarks(mystar);
-      return Boolean.FALSE;
     }
-    else {
-      mystar.add(hId);
-      starlist.add(uId);
-      heanRepository.findByHId(hId).setStarUIds(starlist);
-      markRepository.findByUId(uId).setMarks(mystar);
-      return Boolean.TRUE;
-    }
+    return Boolean.FALSE;
   }
+
   public Hean findHeanByHId(String hId){
     return heanRepository.findByHId(hId);
   }

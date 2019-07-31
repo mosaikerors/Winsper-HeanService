@@ -48,4 +48,13 @@ public class HeanCommentController {
       return ret;
     }
   }
+
+  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @ResponseBody
+  public JSONObject getAllComms(@RequestHeader("uId")Long uId) {
+      JSONObject ret = new JSONObject();
+      ret.put("rescode",0);
+      ret.put("comments",heanCommentService.findAllByUId(uId));
+      return ret;
+  }
 }

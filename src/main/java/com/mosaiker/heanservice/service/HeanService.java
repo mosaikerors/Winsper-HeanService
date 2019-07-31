@@ -14,8 +14,9 @@ public interface HeanService {
   Boolean deleteByHId(String hId);
   Hean upload(Hean hean);
   List<Hean> findAllMarkedByUId(Long uId);
-  Boolean toggleLike(String hId,Long uId);
-  Boolean toggleStar(String hId,Long uId);
+  Boolean setLike(String hId,Long uId);
+  Boolean setStar(String hId,Long uId);
+  Boolean cancelStar(String hId,Long uId);
   Hean findHeanByHId(String hId);
   JSONArray allComments(String hId);
 }

@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface HeanCommentRepository  extends MongoRepository<HeanComment, String> {
     HeanComment findHeanCommentByHId(String hId);
     HeanComment findHeanCommentByCommmentId(String CommentId);
-
+    List<HeanComment> findAllByUId(Long uId);
 
 }

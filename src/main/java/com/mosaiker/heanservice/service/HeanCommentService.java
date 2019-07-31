@@ -1,6 +1,7 @@
 package com.mosaiker.heanservice.service;
 
 //import com.mosaiker.heanservice.entity.Comment;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.entity.HeanComment;
 
@@ -18,6 +19,8 @@ public interface HeanCommentService {
     Integer saveComment(HeanComment newComment);
 
     JSONObject getComJSONObject(String cId);
+
+    JSONArray findAllByUId(Long owner);
 
     //public String saveReply(String hId, List<Integer> commentIndex, Long uId, String username, String content);
 }

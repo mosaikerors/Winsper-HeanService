@@ -1,6 +1,7 @@
 package com.mosaiker.heanservice.service.serviceImple;
 
 //import com.mosaiker.heanservice.entity.Comment;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.HeanComment;
@@ -79,30 +80,27 @@ public class HeanCommentServiceImple implements HeanCommentService {
         ret.put("content",heanComment.getContent());
         return ret;
     }
-/*
-    //任意一级的回复
-    //有点难啊，要搜索树，级联保存
     @Override
-    public String saveReply(String hId, List<Integer> commentIndex, Long uId, String username, String content) {
-        //初始化curComment和curCommentLayer
-        HeanComment bookComment = findHeanCommentsOrNew(hId);
-        Comment curComment = null;
-        List<Comment> curLayerComments = bookComment.getReplies();
-        if (commentIndex.size() == 0) {
-            saveComment(bookComment,uId,username,content);
-        } else {
-            //通过commentIndex找到最底层的curComment，新增评论
-            for (int i = 0; i < commentIndex.size(); i++) {
-                if (curLayerComments != null) {
-                    curComment = curLayerComments.get(commentIndex.get(i));
-                    curLayerComments = curComment.getReplies();
-                } else {
-                    return "error";
-                }
+    public JSONArray findAllByUId(Long owner){
+        List<HeanComment> commentList = heanCommentRepository.findAllByUId(owner);
+        JSONArray array = new JSONArray();
+        for(HeanComment com :commentList){
+            JSONObject onecom = new JSONObject();
+            Boolean isCom = ((com.getTargetCommentId()==null)||(com.getTargetCommentId().isEmpty()));
+            onecom.put("isComment",isCom);
+            if(isCom){
+                onecom.put("username",heanRepository.findByHId(com.getHId()));
+            }else{
+                Long uId = heanCommentRepository.findHeanCommentByCommmentId(com.getTargetCommentId()).getuId();
+                String username = userInfoService.getSimpleInfo(uId).getString("username");
+                onecom.put("username",username);
             }
-            saveComment(curComment,uId,username,content);
+            onecom.put("content",com.getContent());
+            onecom.put("time",com.getCommentTime());
+            onecom.put("hId",com.getHId());
+            array.add(onecom);
         }
-        heanCommentRepository.save(bookComment);
-        return "ok";
-    }*/
+        return array;
+    }
+
 }
