@@ -33,6 +33,21 @@
       <scope>test</scope>
     </dependency>
 
+    <!--    websocket依赖项-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+      <version>2.0.5.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-messaging</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>com.zhenzikj</groupId>
       <artifactId>zhenzisms</artifactId>
@@ -119,7 +134,6 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-spring-web</artifactId>
       <version>2.9.2</version>
-
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
