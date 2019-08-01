@@ -1,5 +1,6 @@
 package com.mosaiker.heanservice.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import javax.persistence.ElementCollection;
 import org.springframework.data.annotation.Id;

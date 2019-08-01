@@ -37,7 +37,7 @@ public class Hean {
   private Long geoStr;
 
   public Hean(Long uId, Date createdTime, String text, double longtitude, double latitude,
-      double height, List<String> pics) {
+              double height, List<String> pics) {
     this.uId = uId;
     this.createdTime = createdTime;
     this.text = text;
