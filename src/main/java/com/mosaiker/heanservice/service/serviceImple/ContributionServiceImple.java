@@ -3,6 +3,7 @@ package com.mosaiker.heanservice.service.serviceImple;
 import com.mosaiker.heanservice.entity.Contribution;
 import com.mosaiker.heanservice.repository.ContributionRepository;
 import com.mosaiker.heanservice.service.ContributionService;
+import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,11 @@ public class ContributionServiceImple implements ContributionService {
 
     @Override
     public List<Contribution> findContributionsByDate(Long date) {
-        return contributionRepository.findAllByDate(date);
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(date));
+        c.add(Calendar.DATE, -1);
+        Date boundary=c.getTime();
+        return contributionRepository.findAllByDateAfter(boundary.getTime());
     }
 
     @Override

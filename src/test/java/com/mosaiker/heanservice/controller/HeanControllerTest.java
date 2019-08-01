@@ -10,9 +10,11 @@ import static org.junit.Assert.assertTrue;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mosaiker.heanservice.entity.Contribution;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.Picture;
 import com.mosaiker.heanservice.repository.HeanRepository;
+import com.mosaiker.heanservice.service.ContributionService;
 import com.mosaiker.heanservice.service.HeanService;
 import com.mosaiker.heanservice.service.PictureService;
 import com.mosaiker.heanservice.service.UserInfoService;
@@ -55,6 +57,8 @@ public class HeanControllerTest {
   @Mock
   private UserInfoService userInfoService;
   @Mock
+  private ContributionService contributionService;
+  @Mock
   private HeanRepository heanRepository;
   @Mock
   private HeanService heanService;
@@ -64,6 +68,7 @@ public class HeanControllerTest {
   private Hean hean2 = new Hean(1L, new Date(), "hean2", 1.01, 1.01, 1.01, new ArrayList<String>());
   private Hean hean22 = new Hean(22L, new Date(), "hean2", 1.01, 1.01, 1.01,
       new ArrayList<String>());
+  private Contribution contribution = new Contribution(1L, "1", new Date().getTime());
 
   @Before
   public void before() throws Exception {
@@ -461,4 +466,39 @@ public class HeanControllerTest {
     assertTrue(MyJSONUtil.compareTwoJSONObject(expect, heanController.cancelStar(param, 1L)));
   }
 
+  /**
+   * Method: contributeNew(@RequestParam(value = "pictures") MultipartFile[]
+   * files,@RequestParam(value = "uId") Long uId, @RequestParam(value = "text") String
+   * text,@RequestParam(value = "location") String location)
+   */
+  @Test
+  public void testContributeNew() throws Exception {
+    assertTrue(MyJSONUtil.compareTwoJSONObject(new JSONObject() {{
+      put("rescode", 4);
+    }}, heanController.contributeNew(null, 1L, null, "1.0,1.0,1.0")));
+    when(heanService.upload(anyObject())).thenReturn(hean1);
+    assertTrue(MyJSONUtil.compareTwoJSONObject(new JSONObject() {{
+      put("rescode", 0);
+    }}, heanController.contributeNew(null, 1L, "test", "1.0,1.0,1.0")));
+  }
+
+  /**
+   * Method: findContributionsByDate(@RequestParam(value = "date") Long date)
+   */
+  @Test
+  public void testFindContributionsByDate() throws Exception {
+    when(contributionService.findContributionsByDate(anyObject()))
+        .thenReturn(new ArrayList<Contribution>() {{
+          add(contribution);
+        }});
+    JSONArray conlist = new JSONArray() {{
+      add(contribution.ToJSONObject());
+    }};
+    JSONObject expect = new JSONObject() {{
+      put("rescode", 0);
+      put("contributions", conlist);
+    }};
+    assertTrue(MyJSONUtil.compareTwoJSONObject(expect,
+        heanController.findContributionsByDate(new Date().getTime())));
+  }
 }

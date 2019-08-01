@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ContributionRepository extends CrudRepository<Contribution, Long> {
-    List<Contribution> findAllByDate(Long date);
+    List<Contribution> findAllByDateAfter(Long date);
 
     List<Contribution> findAllByHId(String hId);
 
