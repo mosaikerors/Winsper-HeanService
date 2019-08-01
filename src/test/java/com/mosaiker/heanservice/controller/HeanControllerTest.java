@@ -340,7 +340,7 @@ public class HeanControllerTest {
     assertEquals(expected1, result4.toJSONString());
 
     //图片数量大于4
-    String filePath4 = this.getClass().getResource("").getPath() + "HeanControllertesta.class";
+    String filePath4 = this.getClass().getResource("").getPath() + "HeanControllerTest.class";
     File file4 = new File(filePath4);
     FileInputStream fileInputStream41 = new FileInputStream(file4);
     FileInputStream fileInputStream42 = new FileInputStream(file4);
@@ -354,10 +354,6 @@ public class HeanControllerTest {
     assertEquals(expected41, result41.toJSONString());
 
     //经纬高格式不对的情况
-    String filePath = this.getClass().getResource("").getPath() + "HeanControllertesta.class";
-    File file = new File(filePath);
-    FileInputStream fileInputStream1 = new FileInputStream(file);
-    FileInputStream fileInputStream2 = new FileInputStream(file);
     MultipartFile[] pic2 = new MultipartFile[]{picPart1, picPart2};
     JSONObject result5 = heanController.uploadHean(pic2, 10000L, "hello", "0.1,0.1");
     String expected2 = "{\"rescode\":5}";
