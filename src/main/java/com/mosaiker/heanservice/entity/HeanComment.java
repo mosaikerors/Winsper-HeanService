@@ -1,6 +1,5 @@
 package com.mosaiker.heanservice.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import javax.persistence.ElementCollection;
 import org.springframework.data.annotation.Id;
@@ -21,10 +20,8 @@ public class HeanComment {
   private String targetCommentId;
 
 
-
   @ElementCollection
   private List<String> replies;
-
 
 
   public HeanComment() {
@@ -73,6 +70,7 @@ public class HeanComment {
   public void setCommentTime(Long commentTime) {
     this.commentTime = commentTime;
   }
+
   public List<String> getReplies() {
     return replies;
   }
@@ -97,7 +95,7 @@ public class HeanComment {
     this.targetCommentId = targetCommentId;
   }
 
-  public void addReply(String commmentId){
+  public void addReply(String commmentId) {
     this.replies.add(commmentId);
   }
 

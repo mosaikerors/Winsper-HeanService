@@ -5,11 +5,15 @@ import com.mosaiker.heanservice.entity.HeanComment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
-import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
-public interface HeanCommentRepository  extends MongoRepository<HeanComment, String> {
-    HeanComment findHeanCommentByHId(String hId);
-    HeanComment findHeanCommentByCommmentId(String CommentId);
-    List<HeanComment> findAllByUId(Long uId);
+@Repository
+public interface HeanCommentRepository extends MongoRepository<HeanComment, String> {
+
+  HeanComment findHeanCommentByHId(String hId);
+
+  HeanComment findHeanCommentByCommmentId(String CommentId);
+
+  List<HeanComment> findAllByUId(Long uId);
 
 }

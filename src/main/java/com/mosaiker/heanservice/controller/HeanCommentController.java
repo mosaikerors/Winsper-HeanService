@@ -2,13 +2,10 @@ package com.mosaiker.heanservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.HeanComment;
 import com.mosaiker.heanservice.service.HeanCommentService;
-import com.mosaiker.heanservice.service.UserInfoService;
 import java.util.ArrayList;
 import java.util.Date;
-import org.apache.commons.lang.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +18,18 @@ public class HeanCommentController {
 
   @Autowired
   private HeanCommentService heanCommentService;
-  private UserInfoService userInfoService;
 
 
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   @ResponseBody
-  public JSONObject add(@RequestBody JSONObject param, @RequestHeader("uId")Long uId) {
+  public JSONObject add(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
     try {
       JSONObject ret = new JSONObject();
       JSONObject com = new JSONObject();
       String hId = param.getString("hId");
       String targetCommentId = param.getString("targetCommentId");
       String content = param.getString("content");
-      if(content.length()<=0){
+      if (content.length() <= 0) {
         throw new Exception();
       }
       HeanComment newComment = new HeanComment(hId, uId, content, new Date().getTime(),
@@ -51,10 +47,10 @@ public class HeanCommentController {
 
   @RequestMapping(value = "/", method = RequestMethod.POST)
   @ResponseBody
-  public JSONObject getAllComms(@RequestHeader("uId")Long uId) {
-      JSONObject ret = new JSONObject();
-      ret.put("rescode",0);
-      ret.put("comments",heanCommentService.findAllByUId(uId));
-      return ret;
+  public JSONObject getAllComms(@RequestHeader("uId") Long uId) {
+    JSONObject ret = new JSONObject();
+    ret.put("rescode", 0);
+    ret.put("comments", heanCommentService.findAllByUId(uId));
+    return ret;
   }
 }

@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableEurekaClient
-//@EnableFeignClients
+@EnableFeignClients
 @EnableHystrix
 @RefreshScope
 public class HeanServiceApplication {

@@ -1,12 +1,13 @@
 package com.mosaiker.heanservice.repository;
 
 
-
 import com.mosaiker.heanservice.entity.Marked;
-import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface MarkRepository extends MongoRepository<Marked,String> {
-    Marked findByUId(Long uId);
+@Repository
+public interface MarkRepository extends MongoRepository<Marked, String> {
+
+  Marked findByUId(Long uId);
 }
