@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class ContributionServiceImple implements ContributionService {
     @Autowired
-    ContributionRepository contributionRepository;
+    private ContributionRepository contributionRepository;
 
     @Override
     public List<Contribution> findContributionsByDate(Long date) {

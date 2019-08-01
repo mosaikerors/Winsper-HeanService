@@ -3,9 +3,9 @@ package com.mosaiker.heanservice.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Data
