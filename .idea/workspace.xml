@@ -209,6 +209,7 @@
       <find>anyO</find>
       <find>asser</find>
       <find>user</find>
+      <find>mysql</find>
     </findStrings>
     <replaceStrings>
       <replace>heanCommentRepository</replace>
