@@ -1,6 +1,7 @@
 package com.mosaiker.heanservice.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.mosaiker.heanservice.entity.Contribution;
 import com.mosaiker.heanservice.entity.Hean;
 import com.mosaiker.heanservice.entity.Picture;
 import com.mosaiker.heanservice.repository.HeanRepository;
@@ -239,7 +240,7 @@ public class HeanController {
         if ((files == null || files.length <= 0) && (text == null || text.equals(""))) {
             result.put("rescode", 4);
             return result;
-        } else if (files.length > 4) {
+        } else if (files!=null&&files.length > 4) {
             result.put("rescode", 1);//图片数大于4
             return result;
         }
@@ -248,7 +249,7 @@ public class HeanController {
             result.put("rescode", 5);
             return result; }
         List<String> pUrls = new ArrayList<>();
-        for (int i = 0; i < files.length; i++) {
+        for (int i = 0; files!=null&&i < files.length; i++) {
             MultipartFile file = files[i];
             String url = pictureService.uploadPicture(file, baseUrl);
             if (url == null) {
@@ -339,7 +340,12 @@ public class HeanController {
     public JSONObject findContributionsByDate(@RequestParam(value = "date") Long date) {
         JSONObject result = new JSONObject();
         result.put("rescode", 0);
-        result.put("contributions", contributionService.findContributionsByDate(date));
+        JSONArray array = new JSONArray();
+        List<Contribution> list =contributionService.findContributionsByDate(date);
+        for(Contribution one:list){
+            array.add(one.ToJSONObject());
+        }
+        result.put("contributions", array);
         return result;
     }
 }
