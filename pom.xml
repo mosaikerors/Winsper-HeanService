@@ -33,6 +33,21 @@
       <scope>test</scope>
     </dependency>
 
+    <!--    websocket依赖项-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+      <version>2.0.5.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-messaging</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>com.zhenzikj</groupId>
       <artifactId>zhenzisms</artifactId>
@@ -99,6 +114,7 @@
       <artifactId>spring-data-mongodb</artifactId>
       <version>2.1.9.RELEASE</version>
     </dependency>
+
     <dependency>
       <groupId>org.imgscalr</groupId>
       <artifactId>imgscalr-lib</artifactId>
@@ -118,14 +134,52 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-spring-web</artifactId>
       <version>2.9.2</version>
-
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>5.1.8.RELEASE</version>
     </dependency>
-    
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>1.7.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.powermock</groupId>
+          <artifactId>powermock-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.powermock</groupId>
+          <artifactId>powermock-reflect</artifactId>
+        </exclusion>
+      </exclusions>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-mockito</artifactId>
+      <version>1.7.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+    </dependency>
+
   </dependencies>
   <dependencyManagement>
     <dependencies>

@@ -1,12 +1,13 @@
 package com.mosaiker.heanservice.repository;
 
-import com.mosaiker.heanservice.entity.Picture;
+
+import com.mosaiker.heanservice.entity.Marked;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PictureRepository extends MongoRepository<Picture, String> {
+public interface MarkRepository extends MongoRepository<Marked, String> {
 
-  Picture findPictureByPId(String pId);
-
+  Marked findByUId(Long uId);
 }

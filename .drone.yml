@@ -1,18 +1,18 @@
 kind: pipline
-name: Winsper-HeanService
+name: winsper-hean
 
 steps:
-- name: test
-  image: maven
-  volumes:
-  - name: dependency
-    path: /root/.m2
-# - name: configuration
-#   path: /drone/src/back-end/src/main/resources/application.yml
-  commands:
-  - mvn clean
-  - mvn package -Dmaven.test.skip=true
-  - echo "test and package hean-service completed 🙂🙂🙂"
+  - name: test
+    image: maven
+    volumes:
+      - name: dependency
+        path: /root/.m2
+    # - name: configuration
+    #   path: /drone/src/back-end/src/main/resources/application.yml
+    commands:
+      - mvn clean
+      - mvn package -Dmaven.test.skip=true
+      - echo "test and package hean-service completed 🙂🙂🙂"
 
 - name: upload
   image: appleboy/drone-scp
@@ -46,6 +46,6 @@ steps:
     - kubectl apply -f hean-deployment.yml
 
 volumes:
-- name: dependency
-  host:
-    path: /root/.m2
+  - name: dependency
+    host:
+      path: /root/.m2

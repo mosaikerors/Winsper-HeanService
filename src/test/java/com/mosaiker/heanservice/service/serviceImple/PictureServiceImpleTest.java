@@ -3,6 +3,8 @@ package com.mosaiker.heanservice.service.serviceImple;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -15,20 +17,24 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import org.bson.types.Binary;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.stubbing.BaseStubbing;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
 * PictureServiceImple Tester.
 *
-* @author <Authors name>
-* @since <pre>���� 4, 2019</pre>
+* @author <DeeEll-X>
+* @since <pre>July 4, 2019</pre>
 * @version 1.0
 */
 public class PictureServiceImpleTest {
@@ -36,8 +42,9 @@ public class PictureServiceImpleTest {
   private PictureRepository pictureRepository;
   @InjectMocks
   private PictureServiceImple pictureServiceImple;
-
-@Before
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
+  @Before
 public void before() throws Exception {
   MockitoAnnotations.initMocks(this);
 }
@@ -99,6 +106,7 @@ public void testUploadPicture() throws Exception {
   MultipartFile pic2 = new MockMultipartFile("pic2", "Mockpic2", "image/jpeg", fileInputStream2);
   MultipartFile pic3 = new MockMultipartFile("pic3", "Mockpic3", "image/png", fileInputStream3);
   MultipartFile pic4 = new MockMultipartFile("pic4", "Mockpic4", "image/gif", fileInputStream4);
+  MultipartFile pic5 = new MockMultipartFile("pic5", "Mockpic5", "image/png", new FileInputStream(file));
 
     Picture picture1 = new Picture();
   picture1.setContent(new Binary(pic1.getBytes()));
@@ -134,14 +142,13 @@ public void testUploadPicture() throws Exception {
   picture4.setContent(new Binary(pic4.getBytes()));
   picture4.setContentType(pic4.getContentType());
   picture4.setSize(pic4.getSize());
-try{
-  pictureServiceImple.uploadPicture(pic4, filePath);
-  fail("No exception thrown.");
-}catch(Exception ex){
-  IOException ex1 = new IOException();
-    assertEquals(ex.getClass(),ex1.getClass());
-  }
 
+  assertNull(pictureServiceImple.uploadPicture(pic4, filePath));
+
+  MultipartFile mock = Mockito.mock(MultipartFile.class);
+  when(mock.getBytes()).thenThrow(new IOException());
+  when(mock.getContentType()).thenReturn("image/jpg");
+  assertNull(pictureServiceImple.uploadPicture(mock,filePath));
 
 
 }
