@@ -13,37 +13,37 @@ steps:
       - mvn clean
       - mvn package -Dmaven.test.skip=true
       - echo "test and package hean-service completed 🙂🙂🙂"
+      
+  - name: upload
+    image: appleboy/drone-scp
+    settings:
+      host: 10.0.0.41
+      username: root
+      key: 
+        from_secret: private_key
+      rm: true
+      target: ~/tbc/drone/tmp
+      source:
+      - target/hean-service-0.0.1-SNAPSHOT.jar
+      - Dockerfile
 
-- name: upload
-  image: appleboy/drone-scp
-  settings:
-    host: 10.0.0.41
-    username: root
-    key: 
-      from_secret: private_key
-    rm: true
-    target: ~/tbc/drone/tmp
-    source:
-    - target/hean-service-0.0.1-SNAPSHOT.jar
-    - Dockerfile
-
-- name: deploy
-  image: appleboy/drone-ssh
-  settings:
-    host: 10.0.0.41
-    username: root
-    key: 
-      from_secret: private_key
-    command_timeout: 5m
-    script:
-    - cd ~/tbc/drone/tmp/target
-    - cp ../Dockerfile .
-    - docker build -t gusabary/winsper-hean .
-    - docker login
-    - docker push gusabary/winsper-hean
-    - cd ~/tbc/Winsper
-    - kubectl delete deploy/winsper-hean
-    - kubectl apply -f hean-deployment.yml
+  - name: deploy
+    image: appleboy/drone-ssh
+    settings:
+      host: 10.0.0.41
+      username: root
+      key: 
+        from_secret: private_key
+      command_timeout: 5m
+      script:
+      - cd ~/tbc/drone/tmp/target
+      - cp ../Dockerfile .
+      - docker build -t gusabary/winsper-hean .
+      - docker login
+      - docker push gusabary/winsper-hean
+      - cd ~/tbc/Winsper
+      - kubectl delete deploy/winsper-hean
+      - kubectl apply -f hean-deployment.yml
 
 volumes:
   - name: dependency
