@@ -1,5 +1,5 @@
 kind: pipline
-name: Winsper-HeanService
+name: winsper-hean
 
 steps:
   - name: test
@@ -14,7 +14,7 @@ steps:
       - mvn package -Dmaven.test.skip=true
       - echo "test and package hean-service completed 🙂🙂🙂"
 
-  - name: upload
+  - name: upload_master
     image: appleboy/drone-scp
     settings:
       host: 10.0.0.98
@@ -22,24 +22,58 @@ steps:
       key:
         from_secret: private_key
       rm: true
-      target: /root/test/Winsper/winsper-hean
+      target: /Winsper/winsper-hean
+      source:
+        - target/hean-service-0.0.1-SNAPSHOT.jar
+        - Dockerfile
 
-  - name: deploy
+  - name: make_image_and_copy
     image: appleboy/drone-ssh
     settings:
       host: 10.0.0.98
       username: root
-      key:
-        from_secret: private_key
-      command_timeout: 10m
       script:
-        - cd /root/test/Winsper/winsper-hean/target
+        - cd /Winsper/winsper-hean/target
         - cp ../Dockerfile .
-        - docker rm -f deeell-test/winsper-hean
-        - docker rm -f gusabary/winsper-hean
-        - docker build -t gusabary/winsper-hean .
-        - docker login
-        - docker push gusabary/winsper-hean
+        - docker build -t winsper-hean .
+        - docker save winsper-hean>winsper-hean.tar
+        - scp winsper-hean.tar root@10.0.0.106:/root/Winsper/winsper-hean
+        - scp winsper-hean.tar root@10.0.0.39:/root/Winsper/winsper-hean
+        - scp winsper-hean.tar root@10.0.0.99:/root/Winsper/winsper-hean
+
+  - name: deploy_slave1
+    image: appleboy/drone-ssh
+    settings:
+      host: 10.0.0.106
+      username: root
+      script:
+        - cd /Winsper/winsper-hean
+        - docker load -i winsper-hean.tar
+        - docker rm -f winsper-hean-c
+        - docker run -d --name winsper-hean-c --expose=7190 -p 7190:7190 -e "EUREKA_INSTANCE_IP-ADDRESS=10.0.0.106" -e "SERVER_PORT=7190" winsper-hean
+
+  - name: deploy_slave2
+    image: appleboy/drone-ssh
+    settings:
+      host: 10.0.0.39
+      username: root
+      script:
+        - cd /Winsper/winsper-hean
+        - docker load -i winsper-hean.tar
+        - docker rm -f winsper-hean-c
+        - docker run -d --name winsper-hean-c --expose=7190 -p 7190:7190 -e "EUREKA_INSTANCE_IP-ADDRESS=10.0.0.39" -e "SERVER_PORT=7190" winsper-hean
+
+  - name: deploy_slave3
+    image: appleboy/drone-ssh
+    settings:
+      host: 10.0.0.99
+      username: root
+      script:
+        - cd /Winsper/winsper-hean
+        - docker load -i winsper-hean.tar
+        - docker rm -f winsper-hean-c
+        - docker run -d --name winsper-hean-c --expose=7190 -p 7190:7190 -e "EUREKA_INSTANCE_IP-ADDRESS=10.0.0.99" -e "SERVER_PORT=7190" winsper-hean
+
 
 
 

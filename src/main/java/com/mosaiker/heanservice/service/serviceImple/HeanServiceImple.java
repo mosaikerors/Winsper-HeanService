@@ -23,7 +23,7 @@ public class HeanServiceImple implements HeanService {
   private HeanCommentService heanCommentService;
 
   public List<Hean> findHeansByUId(Long uId) {
-    return heanRepository.findAllByUId(uId).isEmpty() ? null : heanRepository.findAllByUId(uId);
+    return heanRepository.findAllByUId(uId);
   }
 
   public List<Hean> findAllHeans(Double lon, Double lat) {

@@ -234,7 +234,7 @@ public class HeanController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public JSONObject uploadHean(@RequestParam(value = "pictures") MultipartFile[] files,
-                                 @RequestParam(value = "uId") Long uId, @RequestParam(value = "text") String text,
+                                 @RequestHeader(value = "uId") Long uId, @RequestParam(value = "text") String text,
                                  @RequestParam(value = "location") String location) {
         JSONObject result = new JSONObject();
         if ((files == null || files.length <= 0) && (text == null || text.equals(""))) {
