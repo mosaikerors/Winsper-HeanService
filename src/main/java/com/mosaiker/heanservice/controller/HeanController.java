@@ -261,7 +261,7 @@ public class HeanController {
         double longtitude = Double.parseDouble(locations[0]);
         double latitude = Double.parseDouble(locations[1]);
         double height = Double.parseDouble(locations[2]);
-        Hean upload = new Hean(uId, new Date(), text, longtitude, latitude, height, pUrls);
+        Hean upload = new Hean(uId, new Date().getTime(), text, longtitude, latitude, height, pUrls);
         heanService.upload(upload);
         result.put("rescode", 0);
         return result;
