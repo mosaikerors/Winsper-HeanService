@@ -21,7 +21,7 @@ public class Hean {
   @Id
   private String hId;
   private Long uId;
-  private Date createdTime; // 上传时间
+  private Long createdTime; // 上传时间
   private String text;
   private double longtitude;//精度
   private double latitude;//纬度
@@ -36,7 +36,7 @@ public class Hean {
   private List<String> commentIds;
   private Long geoStr;
 
-  public Hean(Long uId, Date createdTime, String text, double longtitude, double latitude,
+  public Hean(Long uId, Long createdTime, String text, double longtitude, double latitude,
               double height, List<String> pics) {
     this.uId = uId;
     this.createdTime = createdTime;

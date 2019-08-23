@@ -20,12 +20,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="35" />
-    <option name="y" value="302" />
-    <option name="width" value="1348" />
-    <option name="height" value="655" />
-  </component>
+  <component name="ProjectId" id="1PMWXkyJqwzKEGKzrjiEqxup6ok" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
@@ -68,6 +63,8 @@
       <updated>1563691769861</updated>
       <workItem from="1563691774307" duration="23000" />
       <workItem from="1563708930780" duration="75000" />
+      <workItem from="1565684491777" duration="2558000" />
+      <workItem from="1566565862816" duration="399000" />
     </task>
     <servers />
   </component>
@@ -79,7 +76,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

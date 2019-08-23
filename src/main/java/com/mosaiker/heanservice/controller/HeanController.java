@@ -95,7 +95,7 @@ public class HeanController {
     }
 
     private List<Hean> findTimePoint(String time, Long uId) {
-        Date boundary;
+        Long boundary;
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         if (time.equals("day")) {//过去一天
@@ -107,7 +107,7 @@ public class HeanController {
         } else if (time.equals("year")) {//过去一年
             c.add(Calendar.YEAR, -1);
         }
-        boundary = c.getTime();
+        boundary = c.getTime().getTime();
         return heanRepository.findAllByCreatedTimeAfter(boundary) == null ? new ArrayList<Hean>()
                 : heanRepository.findAllByCreatedTimeAfter(boundary);
     }
