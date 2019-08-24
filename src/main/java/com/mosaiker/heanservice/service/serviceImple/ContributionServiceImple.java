@@ -36,8 +36,13 @@ public class ContributionServiceImple implements ContributionService {
     }
 
     @Override
-    public void addNewContribution(String hId) {
-        Contribution contribution = new Contribution(hId);
+    public void addNewContribution(String hId, Long uId, String reason) {
+        Contribution contribution = new Contribution(hId, uId, reason);
         contributionRepository.save(contribution);
     }
+
+  @Override
+  public List<Contribution> findContributionsByUId(Long uId) {
+    return contributionRepository.findAllByUId(uId);
+  }
 }

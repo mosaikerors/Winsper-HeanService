@@ -52,7 +52,16 @@ public class HeanServiceImple implements HeanService {
     List<Long> likelist = heanRepository.findLikeUIdsByHId(hId);
     if (!likelist.contains(uId)) {
       likelist.add(uId);
-      heanRepository.findByHId(hId).setLikeUIds(likelist);
+      heanRepository.save(heanRepository.findByHId(hId).setLikeUIds(likelist));
+    }
+    return Boolean.TRUE;
+  }
+
+  public Boolean setUnLike(String hId, Long uId) {
+    List<Long> likelist = heanRepository.findLikeUIdsByHId(hId);
+    if (likelist.contains(uId)) {
+      likelist.remove(uId);
+      heanRepository.save(heanRepository.findByHId(hId).setLikeUIds(likelist));
     }
     return Boolean.TRUE;
   }
@@ -63,8 +72,8 @@ public class HeanServiceImple implements HeanService {
     if (!starlist.contains(uId)) {
       mystar.add(hId);
       starlist.add(uId);
-      heanRepository.findByHId(hId).setStarUIds(starlist);
-      markRepository.findByUId(uId).setMarks(mystar);
+      heanRepository.save(heanRepository.findByHId(hId).setStarUIds(starlist));
+      markRepository.save(markRepository.findByUId(uId).setMarks(mystar));
     }
     return Boolean.TRUE;
   }
@@ -75,8 +84,8 @@ public class HeanServiceImple implements HeanService {
     if (starlist.contains(uId)) {
       mystar.remove(hId);
       starlist.remove(uId);
-      heanRepository.findByHId(hId).setStarUIds(starlist);
-      markRepository.findByUId(uId).setMarks(mystar);
+      heanRepository.save(heanRepository.findByHId(hId).setStarUIds(starlist));
+      markRepository.save(markRepository.findByUId(uId).setMarks(mystar));
     }
     return Boolean.FALSE;
   }

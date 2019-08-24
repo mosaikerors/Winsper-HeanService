@@ -27,7 +27,7 @@ public class Hean {
   private double latitude;//纬度
   private double height;//海拔
   @ElementCollection
-  private List<String> pics;
+  private List<String> pictures;
   @ElementCollection
   private List<Long> likeUIds;
   @ElementCollection
@@ -37,14 +37,14 @@ public class Hean {
   private Long geoStr;
 
   public Hean(Long uId, Long createdTime, String text, double longtitude, double latitude,
-              double height, List<String> pics) {
+              double height, List<String> pictures) {
     this.uId = uId;
     this.createdTime = createdTime;
     this.text = text;
     this.longtitude = longtitude;
     this.latitude = latitude;
     this.height = height;
-    this.pics = pics;
+    this.pictures = pictures;
     this.likeUIds = new ArrayList<>();
     this.starUIds = new ArrayList<>();
     this.commentIds = new ArrayList<>();
@@ -60,7 +60,7 @@ public class Hean {
     result.put("longtitude", this.longtitude);
     result.put("latitude", this.latitude);
     result.put("height", this.height);
-    result.put("pics", this.pics);
+    result.put("pictures", this.pictures);
     result.put("starCount", this.starUIds.size());
     result.put("likeCount", this.likeUIds.size());
     result.put("commentCount", this.commentIds.size());
@@ -76,7 +76,7 @@ public class Hean {
     result.put("longtitude", this.longtitude);
     result.put("latitude", this.latitude);
     result.put("height", this.height);
-    result.put("pics", this.pics);
+    result.put("pictures", this.pictures);
     result.put("isLike", this.likeUIds.contains(uId));
     result.put("isStar", this.starUIds.contains(uId));
     return result;
@@ -98,8 +98,8 @@ public class Hean {
     result.put("starCount", this.starUIds.size());
     result.put("commentCount", this.commentIds.size());
     result.put("text", this.text);
-    if (this.pics.size() > 0) {
-      result.put("cover", this.pics.get(0));
+    if (this.pictures.size() > 0) {
+      result.put("cover", this.pictures.get(0));
     }
     result.put("hasLiked", this.likeUIds.contains(uId));
     result.put("hasStared", this.starUIds.contains(uId));
@@ -112,7 +112,7 @@ public class Hean {
     result.put("hId", this.hId);
     result.put("uId", this.uId);
     result.put("createdTime", this.createdTime);
-    result.put("pics", this.pics);
+    result.put("pictures", this.pictures);
     result.put("likeCount", this.likeUIds.size());
     result.put("starCount", this.starUIds.size());
     result.put("hasLiked", this.likeUIds.contains(uId));

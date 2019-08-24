@@ -131,34 +131,27 @@ public class HeanController {
 
     @RequestMapping(value = "/detailed", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestParam Double longitude,
-                                          @RequestParam Double latitude, @RequestHeader("uId") Long uId) {
-        JSONObject info = userInfoService.getSimpleInfo(uId);
+    public JSONObject findOneDetailedHean(@RequestParam String hId, @RequestHeader("uId") Long uId) {
+        JSONObject result = new JSONObject();
         Hean dest = heanService.findHeanByHId(hId);
-        Long loc = new Geohash().encode(longitude, latitude);
-        if (heanRepository.findAllByGeoStrBetween(loc - 10 * 10, loc + 10 * 10).contains(dest)) {
-            JSONObject destDetail = dest.ToDetail(uId);
-            destDetail.put("avatar", info.get("avatarUrl"));
-            destDetail.put("username", info.get("username"));
-            destDetail.put("comments", heanService.allComments(hId));
-            JSONObject result = new JSONObject();
-
-            result.put("rescode", 0);
-            result.put("hean", destDetail);
-
-            return result;
-        } else {
-            JSONObject result = new JSONObject();
+        if (dest == null) {
             result.put("rescode", 3);
             return result;
         }
-
+        JSONObject destDetail = dest.ToDetail(uId);
+        JSONObject info = userInfoService.getSimpleInfo(destDetail.getLong("uId"));
+        destDetail.put("avatar", info.get("avatarUrl"));
+        destDetail.put("username", info.get("username"));
+        destDetail.put("comments", heanService.allComments(hId));
+        result.put("rescode", 0);
+        result.put("hean", destDetail);
+        return result;
     }
 
 
-    @RequestMapping(value = "/cardlist/{owner}", method = RequestMethod.GET)
+    @RequestMapping(value = "/cardlist", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject findAllByUId(@PathVariable Long owner, @RequestHeader("uId") Long viewer) {
+    public JSONObject findAllByUId(@RequestParam Long owner, @RequestHeader("uId") Long viewer) {
         Boolean isPublic = userInfoService.getSimpleInfo(owner).getBoolean("isHeanPublic");
         if (owner.equals(viewer) || isPublic) {
             List<Hean> heanList = heanService.findHeansByUId(owner);
@@ -247,7 +240,8 @@ public class HeanController {
         String[] locations = location.split(",");//位置格式
         if (locations.length != 3) {
             result.put("rescode", 5);
-            return result; }
+            return result;
+        }
         List<String> pUrls = new ArrayList<>();
         for (int i = 0; files!=null&&i < files.length; i++) {
             MultipartFile file = files[i];
@@ -257,7 +251,8 @@ public class HeanController {
                 result.put("badPicture", i);
                 return result;
             }
-            pUrls.add(url); }
+            pUrls.add(url);
+        }
         double longtitude = Double.parseDouble(locations[0]);
         double latitude = Double.parseDouble(locations[1]);
         double height = Double.parseDouble(locations[2]);
@@ -290,9 +285,20 @@ public class HeanController {
     }
 
 
-    @RequestMapping(value = "/collection", method = RequestMethod.POST)
-    @ResponseBody//收藏或取消收藏函
-    public JSONObject setStar(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
+    @RequestMapping(value = "/dislike", method = RequestMethod.POST)
+    @ResponseBody//点赞函
+    public JSONObject setUnLike(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
+        JSONObject result = new JSONObject();
+        String hId = param.getString("hId");
+        Boolean cur = heanService.setUnLike(hId, uId);
+        result.put("rescode", 0);
+        return result;
+    }
+
+
+    @RequestMapping(value = "/collect", method = RequestMethod.POST)
+    @ResponseBody//点赞函
+    public JSONObject setCollect(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
         JSONObject result = new JSONObject();
         String hId = param.getString("hId");
         Boolean cur = heanService.setStar(hId, uId);
@@ -301,51 +307,69 @@ public class HeanController {
     }
 
 
-    @RequestMapping(value = "/collection", method = RequestMethod.DELETE)
-    @ResponseBody//收藏或取消收藏函
-    public JSONObject cancelStar(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
+    @RequestMapping(value = "/uncollect", method = RequestMethod.POST)
+    @ResponseBody//点赞函
+    public JSONObject setUnCollect(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
         JSONObject result = new JSONObject();
         String hId = param.getString("hId");
-        heanService.cancelStar(hId, uId);
+        Boolean cur = heanService.cancelStar(hId, uId);
         result.put("rescode", 0);
         return result;
     }
 
 
-    @RequestMapping(value = "/broadcast/contributeNew", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject contributeNew(@RequestParam(value = "pictures") MultipartFile[] files,
-                                    @RequestParam(value = "uId") Long uId, @RequestParam(value = "text") String text,
-                                    @RequestParam(value = "location") String location) {
-        JSONObject uploadResult = new JSONObject();
-        uploadResult = uploadHean(files, uId, text, location);
-        if (uploadResult.getIntValue("rescode") != 0) {
-            return uploadResult;
-        }
-        return contributeByHId(uploadResult.getString("hId"));
-    }
+//    @RequestMapping(value = "/submission", method = RequestMethod.POST)
+//    @ResponseBody
+//    public JSONObject contributeNew(@RequestParam(value = "pictures") MultipartFile[] files,
+//                                    @RequestParam(value = "uId") Long uId, @RequestParam(value = "text") String text,
+//                                    @RequestParam(value = "location") String location) {
+//        JSONObject uploadResult = new JSONObject();
+//        uploadResult = uploadHean(files, uId, text, location);
+//        if (uploadResult.getIntValue("rescode") != 0) {
+//            return uploadResult;
+//        }
+//        return contributeByHId(uploadResult.getString("hId"));
+//    }
 
 
-    @RequestMapping(value = "/broadcast/contributeByHId", method = RequestMethod.POST)
+    @RequestMapping(value = "/submission", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject contributeByHId(@RequestParam(value = "hId") String hId) {
-        contributionService.addNewContribution(hId);
+    public JSONObject contributeByHId(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
+        contributionService
+            .addNewContribution(param.getString("hId"), uId, param.getString("reason"));
         JSONObject result = new JSONObject();
         result.put("rescode", 0);
         return result;
     }
 
-    @RequestMapping(value = "/broadcast/contributeByHId", method = RequestMethod.GET)
+    @RequestMapping(value = "/submission/selected", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject findContributionsByDate(@RequestParam(value = "date") Long date) {
+    public JSONObject findContributionsByDate(@RequestParam(value = "date") Long date, @RequestHeader("uId") Long uId) {
         JSONObject result = new JSONObject();
         result.put("rescode", 0);
         JSONArray array = new JSONArray();
         List<Contribution> list =contributionService.findContributionsByDate(date);
         for(Contribution one:list){
-            array.add(one.ToJSONObject());
+            Hean hean = heanRepository.findByHId(one.getHId());
+            array.add(hean.ToCard(uId));
         }
-        result.put("contributions", array);
+        result.put("heanCards", array);
+        return result;
+    }
+
+
+    @RequestMapping(value = "/submission/list", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject findContributionsByDate(@RequestParam(value = "owner") Long owner, @RequestHeader("uId") Long uId) {
+        JSONObject result = new JSONObject();
+        result.put("rescode", 0);
+        JSONArray array = new JSONArray();
+        List<Contribution> list =contributionService.findContributionsByUId(owner);
+        for(Contribution one:list){
+            Hean hean = heanRepository.findByHId(one.getHId());
+            array.add(hean.ToCard(uId));
+        }
+        result.put("heanCards", array);
         return result;
     }
 }

@@ -14,4 +14,6 @@ public interface ContributionRepository extends CrudRepository<Contribution, Lon
 
     Contribution findByCId(Long cId);
 
+    List<Contribution> findAllByUId(Long uId);
+
 }

@@ -11,5 +11,7 @@ public interface ContributionService {
 
     Contribution findContributionByCId(Long cId);
 
-    void addNewContribution(String hId);
+    void addNewContribution(String hId, Long uId, String reason);
+
+    List<Contribution> findContributionsByUId(Long uId);
 }

@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping(value = "/comment")
+@RestController
 public class HeanCommentController {
 
   @Autowired
   private HeanCommentService heanCommentService;
 
 
-  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
   @ResponseBody
   public JSONObject add(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
     try {
@@ -45,12 +44,12 @@ public class HeanCommentController {
     }
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
+  @RequestMapping(value = "/comment", method = RequestMethod.GET)
   @ResponseBody
-  public JSONObject getAllComms(@RequestHeader("uId") Long uId) {
+  public JSONObject getAllComms(@RequestParam Long owner, @RequestHeader("uId") Long uId) {
     JSONObject ret = new JSONObject();
     ret.put("rescode", 0);
-    ret.put("comments", heanCommentService.findAllByUId(uId));
+    ret.put("comments", heanCommentService.findAllByUId(owner));
     return ret;
   }
 }

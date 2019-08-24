@@ -20,6 +20,8 @@ public interface HeanService {
 
   Boolean setLike(String hId, Long uId);
 
+  Boolean setUnLike(String hId, Long uId);
+
   Boolean setStar(String hId, Long uId);
 
   Boolean cancelStar(String hId, Long uId);
