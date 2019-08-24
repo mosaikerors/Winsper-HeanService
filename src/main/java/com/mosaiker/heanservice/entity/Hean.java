@@ -124,4 +124,8 @@ public class Hean {
   public void addComment(String cId) {
     this.commentIds.add(cId);
   }
+
+  public Long getUId() {
+    return uId;
+  }
 }

@@ -39,4 +39,8 @@ public class Contribution {
     }};
     return ret;
   }
+
+  public String getHId() {
+    return hId;
+  }
 }

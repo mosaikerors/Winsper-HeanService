@@ -360,7 +360,7 @@ public class HeanController {
 
     @RequestMapping(value = "/submission/list", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject findContributionsByDate(@RequestParam(value = "owner") Long owner, @RequestHeader("uId") Long uId) {
+    public JSONObject findContributionsByUId(@RequestParam(value = "owner") Long owner, @RequestHeader("uId") Long uId) {
         JSONObject result = new JSONObject();
         result.put("rescode", 0);
         JSONArray array = new JSONArray();
