@@ -2,6 +2,7 @@ package com.mosaiker.heanservice.service.serviceImple;
 
 import com.alibaba.fastjson.JSONArray;
 import com.mosaiker.heanservice.entity.Hean;
+import com.mosaiker.heanservice.entity.Marked;
 import com.mosaiker.heanservice.repository.HeanRepository;
 import com.mosaiker.heanservice.repository.MarkRepository;
 import com.mosaiker.heanservice.service.HeanCommentService;
@@ -52,7 +53,9 @@ public class HeanServiceImple implements HeanService {
     List<Long> likelist = heanRepository.findLikeUIdsByHId(hId);
     if (!likelist.contains(uId)) {
       likelist.add(uId);
-      heanRepository.save(heanRepository.findByHId(hId).setLikeUIds(likelist));
+      Hean hean = heanRepository.findByHId(hId);
+      hean.setLikeUIds(likelist);
+      heanRepository.save(hean);
     }
     return Boolean.TRUE;
   }
@@ -61,7 +64,9 @@ public class HeanServiceImple implements HeanService {
     List<Long> likelist = heanRepository.findLikeUIdsByHId(hId);
     if (likelist.contains(uId)) {
       likelist.remove(uId);
-      heanRepository.save(heanRepository.findByHId(hId).setLikeUIds(likelist));
+      Hean hean = heanRepository.findByHId(hId);
+      hean.setLikeUIds(likelist);
+      heanRepository.save(hean);
     }
     return Boolean.TRUE;
   }
@@ -72,8 +77,12 @@ public class HeanServiceImple implements HeanService {
     if (!starlist.contains(uId)) {
       mystar.add(hId);
       starlist.add(uId);
-      heanRepository.save(heanRepository.findByHId(hId).setStarUIds(starlist));
-      markRepository.save(markRepository.findByUId(uId).setMarks(mystar));
+      Hean hean = heanRepository.findByHId(hId);
+      Marked marked = markRepository.findByUId(uId);
+      hean.setStarUIds(starlist);
+      marked.setMarks(mystar);
+      heanRepository.save(hean);
+      markRepository.save(marked);
     }
     return Boolean.TRUE;
   }
@@ -84,8 +93,12 @@ public class HeanServiceImple implements HeanService {
     if (starlist.contains(uId)) {
       mystar.remove(hId);
       starlist.remove(uId);
-      heanRepository.save(heanRepository.findByHId(hId).setStarUIds(starlist));
-      markRepository.save(markRepository.findByUId(uId).setMarks(mystar));
+      Hean hean = heanRepository.findByHId(hId);
+      Marked marked = markRepository.findByUId(uId);
+      hean.setStarUIds(starlist);
+      marked.setMarks(mystar);
+      heanRepository.save(hean);
+      markRepository.save(marked);
     }
     return Boolean.FALSE;
   }
