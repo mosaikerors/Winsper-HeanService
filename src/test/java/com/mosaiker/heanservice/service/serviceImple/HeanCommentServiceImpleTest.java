@@ -74,10 +74,10 @@ public class HeanCommentServiceImpleTest {
   public void testSaveComment() throws Exception {
     when(heanRepository.findByHId("1")).thenReturn(hean1);
 
-    when(heanCommentRepository.findHeanCommentByCommmentId("3")).thenReturn(heanComment3);
-    heanComment1.setCommmentId("1");
-    heanComment2.setCommmentId("2");
-    heanComment3.setCommmentId("3");
+    when(heanCommentRepository.findHeanCommentByCommentId("3")).thenReturn(heanComment3);
+    heanComment1.setCommentId("1");
+    heanComment2.setCommentId("2");
+    heanComment3.setCommentId("3");
     when(heanRepository.save(hean1)).thenReturn(hean1);
     assertSame(0, heanCommentServiceImple.saveComment(heanComment2));
     assertSame(0, heanCommentServiceImple.saveComment(heanComment1));
@@ -113,7 +113,7 @@ public class HeanCommentServiceImpleTest {
       put("uId", 1L);
     }});
     when(heanRepository.findByHId("1")).thenReturn(hean1);
-    when(heanCommentRepository.findHeanCommentByCommmentId("3")).thenReturn(heanComment3);
+    when(heanCommentRepository.findHeanCommentByCommentId("3")).thenReturn(heanComment3);
     assertEquals("test",heanCommentServiceImple.findAllByUId(1L).getJSONObject(0).getString("content"));
   }
 

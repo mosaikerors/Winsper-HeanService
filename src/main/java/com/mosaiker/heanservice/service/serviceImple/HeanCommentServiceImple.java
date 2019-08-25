@@ -24,7 +24,7 @@ public class HeanCommentServiceImple implements HeanCommentService {
 
     @Override
     public HeanComment findHeanCommentByCId(String cId) {
-        return heanCommentRepository.findHeanCommentByCommmentId(cId);
+        return heanCommentRepository.findHeanCommentByCommentId(cId);
     }
 
     //给一个HeanComment加一个子Comment
@@ -33,7 +33,7 @@ public class HeanCommentServiceImple implements HeanCommentService {
         heanCommentRepository.save(newComment);
         if (newComment.getTargetCommentId() != null) {
             HeanComment commented = heanCommentRepository
-                    .findHeanCommentByCommmentId(newComment.getTargetCommentId());
+                    .findHeanCommentByCommentId(newComment.getTargetCommentId());
             commented.addReply(newComment.getCommentId());
             heanCommentRepository.save(commented);
         }
@@ -74,7 +74,7 @@ public class HeanCommentServiceImple implements HeanCommentService {
                 String username = userInfoService.getSimpleInfo(commed.getUId()).getString("username");
                 onecom.put("username", username);
             } else {
-                Long uId = heanCommentRepository.findHeanCommentByCommmentId(com.getTargetCommentId())
+                Long uId = heanCommentRepository.findHeanCommentByCommentId(com.getTargetCommentId())
                         .getuId();
                 String username = userInfoService.getSimpleInfo(uId).getString("username");
                 onecom.put("username", username);

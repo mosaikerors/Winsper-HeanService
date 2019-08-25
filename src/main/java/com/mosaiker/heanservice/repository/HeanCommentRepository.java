@@ -12,7 +12,7 @@ public interface HeanCommentRepository extends MongoRepository<HeanComment, Stri
 
   HeanComment findHeanCommentByHId(String hId);
 
-  HeanComment findHeanCommentByCommmentId(String CommentId);
+  HeanComment findHeanCommentByCommentId(String CommentId);
 
   List<HeanComment> findAllByUId(Long uId);
 
