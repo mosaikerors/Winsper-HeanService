@@ -211,12 +211,8 @@ public class HeanController {
         Hean gotH = heanService.findHeanByHId(hId);
         JSONObject result = new JSONObject();
         if (gotH.getUId().equals(uId)) {
-            Boolean isDeleted = heanService.deleteByHId(hId);
-            if (isDeleted) {
-                result.put("rescode", 0);
-            } else {
-                result.put("rescode", 1);//该函不存在
-            }
+            heanService.deleteByHId(hId);
+            result.put("rescode", 0);
         } else {
             result.put("rescode", 3);
         }

@@ -12,7 +12,7 @@ public interface HeanService {
 
   List<Hean> findAllHeans(Double lon, Double lat);
 
-  Boolean deleteByHId(String hId);
+  void deleteByHId(String hId);
 
   Hean upload(Hean hean);
 

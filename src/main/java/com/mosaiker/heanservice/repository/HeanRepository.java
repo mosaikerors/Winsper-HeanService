@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface HeanRepository extends MongoRepository<Hean,String> {
   List<Hean> findAllByUId(Long uId);
   List<Hean> findAll();
-  Boolean deleteByHId(String hId);
+  void deleteByHId(String hId);
   List<Long> findLikeUIdsByHId(String hId);
   List<Long> findStarUIdsByHId(String hId);
   Hean findByHId(String hId);

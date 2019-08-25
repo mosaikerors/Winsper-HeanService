@@ -32,8 +32,8 @@ public class HeanServiceImple implements HeanService {
     return heanRepository.findAllByGeoStrBetween(loc - 250 * 250, loc + 250 * 250);
   }
 
-  public Boolean deleteByHId(String hId) {
-    return heanRepository.deleteByHId(hId);
+  public void deleteByHId(String hId) {
+    heanRepository.deleteByHId(hId);
   }
 
   public Hean upload(Hean hean) {
