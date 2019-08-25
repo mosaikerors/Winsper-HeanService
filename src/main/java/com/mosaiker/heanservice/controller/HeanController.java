@@ -155,8 +155,8 @@ public class HeanController {
         Boolean isPublic = userInfoService.getSimpleInfo(owner).getBoolean("isHeanPublic");
         if (owner.equals(viewer) || isPublic) {
             List<Hean> heanList = heanService.findHeansByUId(owner);
+            JSONObject result = new JSONObject(true);
             if (heanList != null) {
-                JSONObject result = new JSONObject(true);
                 JSONArray heanCards = new JSONArray();
                 for (Hean hean : heanList) {
                     heanCards.add(hean.ToCard(viewer));
@@ -165,8 +165,8 @@ public class HeanController {
                 result.put("rescode", 0);
                 return result;
             } else {
-                JSONObject result = new JSONObject();
-                result.put("rescode", 4);
+                result.put("rescode", 0);
+                result.put("heanCards", new JSONArray());
                 return result;
             }
         } else {
@@ -183,8 +183,8 @@ public class HeanController {
         Boolean isPublic = userInfoService.getSimpleInfo(owner).getBoolean("isCollectionPublic");
         if (owner.equals(viewer) || isPublic) {
             List<Hean> heanList = heanService.findAllMarkedByUId(owner);
+            JSONObject result = new JSONObject(true);
             if (heanList != null) {
-                JSONObject result = new JSONObject(true);
                 JSONArray heanCards = new JSONArray();
                 for (Hean hean : heanList) {
                     heanCards.add(hean.ToCard(viewer));
@@ -193,8 +193,8 @@ public class HeanController {
                 result.put("rescode", 0);
                 return result;
             } else {
-                JSONObject result = new JSONObject();
-                result.put("rescode", 4);
+                result.put("rescode", 0);
+                result.put("heanCards", new JSONArray());
                 return result;
             }
         } else {
