@@ -128,4 +128,12 @@ public class Hean {
   public Long getUId() {
     return uId;
   }
+
+  public List<Long> getLikeUIds() {
+    return this.likeUIds;
+  }
+
+  public List<Long> getStarUIds() {
+    return this.starUIds;
+  }
 }

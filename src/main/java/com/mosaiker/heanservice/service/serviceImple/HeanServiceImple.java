@@ -54,7 +54,7 @@ public class HeanServiceImple implements HeanService {
   }
 
   public Boolean setLike(String hId, Long uId) {
-    List<Long> likelist = heanRepository.findLikeUIdsByHId(hId);
+    List<Long> likelist = findLikeUIdsByHId(hId);
     if (!likelist.contains(uId)) {
       likelist.add(uId);
       Hean hean = heanRepository.findByHId(hId);
@@ -65,7 +65,7 @@ public class HeanServiceImple implements HeanService {
   }
 
   public Boolean setUnLike(String hId, Long uId) {
-    List<Long> likelist = heanRepository.findLikeUIdsByHId(hId);
+    List<Long> likelist = findLikeUIdsByHId(hId);
     if (likelist.contains(uId)) {
       likelist.remove(uId);
       Hean hean = heanRepository.findByHId(hId);
@@ -76,7 +76,7 @@ public class HeanServiceImple implements HeanService {
   }
 
   public Boolean setStar(String hId, Long uId) {
-    List<Long> starlist = heanRepository.findStarUIdsByHId(hId);
+    List<Long> starlist = findStarUIdsByHId(hId);
     Marked marked = markRepository.findByUId(uId);
     if (marked == null) {
       marked = new Marked(uId);
@@ -95,7 +95,7 @@ public class HeanServiceImple implements HeanService {
   }
 
   public Boolean cancelStar(String hId, Long uId) {
-    List<Long> starlist = heanRepository.findStarUIdsByHId(hId);
+    List<Long> starlist = findStarUIdsByHId(hId);
     Marked marked = markRepository.findByUId(uId);
     if (marked == null) {
       return Boolean.FALSE;
@@ -124,5 +124,15 @@ public class HeanServiceImple implements HeanService {
       coms.add(heanCommentService.getComJSONObject(cId));
     }
     return coms;
+  }
+
+  @Override
+  public List<Long> findLikeUIdsByHId(String hId) {
+    return heanRepository.findByHId(hId).getLikeUIds();
+  }
+
+  @Override
+  public List<Long> findStarUIdsByHId(String hId) {
+    return heanRepository.findByHId(hId).getStarUIds();
   }
 }

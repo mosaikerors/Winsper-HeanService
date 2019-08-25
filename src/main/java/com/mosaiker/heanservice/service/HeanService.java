@@ -29,4 +29,8 @@ public interface HeanService {
   Hean findHeanByHId(String hId);
 
   JSONArray allComments(String hId);
+
+  List<Long> findLikeUIdsByHId(String hId);
+
+  List<Long> findStarUIdsByHId(String hId);
 }
