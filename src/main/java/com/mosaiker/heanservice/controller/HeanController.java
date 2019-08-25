@@ -117,6 +117,10 @@ public class HeanController {
     public JSONObject findOneCardHean(@RequestParam String hId, @RequestHeader("uId") Long uId) {
         Hean dest = heanService.findHeanByHId(hId);
         JSONObject result = new JSONObject(true);
+        if (dest == null) {
+            result.put("rescode", 3);
+            return result;
+        }
         if (dest.getUId().equals(uId) || userInfoService.getSimpleInfo(dest.getUId())
                 .getBoolean("isHeanPublic")) {
             result.put("heanCard", dest.ToCard(uId));

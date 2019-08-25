@@ -51,7 +51,7 @@ public class HeanCommentServiceImple implements HeanCommentService {
         ret.put("commentId", heanComment.getCommentId());
         String commenter = userInfoService.getSimpleInfo(heanComment.getuId()).getString("username");
         ret.put("commenter", commenter);
-        if (heanComment.getTargetCommentId() != "" && heanComment.getTargetCommentId() != null) {
+        if (!heanComment.getTargetCommentId().equals("") && heanComment.getTargetCommentId() != null) {
             HeanComment target = findHeanCommentByCId(heanComment.getTargetCommentId());
             String commented = userInfoService.getSimpleInfo(target.getuId()).getString("username");
             ret.put("commented", commented);
@@ -71,6 +71,10 @@ public class HeanCommentServiceImple implements HeanCommentService {
             onecom.put("isComment", isCom);
             if (isCom) {
                 Hean commed = heanRepository.findByHId(com.getHId());
+                if (commed == null) {
+                    //该hean已被删除
+                    continue;
+                }
                 String username = userInfoService.getSimpleInfo(commed.getUId()).getString("username");
                 onecom.put("username", username);
             } else {
