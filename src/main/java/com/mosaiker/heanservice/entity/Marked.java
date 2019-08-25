@@ -15,9 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Marked {
 
-  Long uId;
+  private Long uId;
   @ElementCollection
-  List<String> marks;//list of marked hean card
+  private List<String> marks;//list of marked hean card
 
   public Marked(Long uId) {
     this.uId = uId;

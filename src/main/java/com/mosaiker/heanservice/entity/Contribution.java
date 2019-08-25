@@ -1,6 +1,7 @@
 package com.mosaiker.heanservice.entity;
 
 import com.alibaba.fastjson.JSONObject;
+import javax.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +15,13 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 public class Contribution {
-
   @Id
-  Long cId;
-  String hId;
-  Long uId;
-  Long date;
-  String reason;
+  @GeneratedValue
+  private Long cId;
+  private String hId;
+  private Long uId;
+  private Long date;
+  private String reason;
 
   public Contribution(String hId, Long uId, String reason) {
     this.hId = hId;
@@ -30,14 +31,13 @@ public class Contribution {
   }
 
   public JSONObject ToJSONObject() {
-    JSONObject ret = new JSONObject() {{
+    return new JSONObject() {{
       put("cId", cId);
       put("hId", hId);
       put("uId", uId);
       put("date", date);
       put("reason", reason);
     }};
-    return ret;
   }
 
   public String getHId() {
