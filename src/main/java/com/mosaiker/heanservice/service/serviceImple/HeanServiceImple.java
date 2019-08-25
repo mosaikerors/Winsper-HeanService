@@ -41,7 +41,11 @@ public class HeanServiceImple implements HeanService {
   }
 
   public List<Hean> findAllMarkedByUId(Long uId) {
-    List<String> starList = markRepository.findByUId(uId).getMarks();
+    Marked marked = markRepository.findByUId(uId);
+    if (marked == null) {
+      return null;
+    }
+    List<String> starList = marked.getMarks();
     List<Hean> heanList = new ArrayList<>();
     for (String hId : starList) {
       heanList.add(heanRepository.findByHId(hId));
@@ -73,12 +77,15 @@ public class HeanServiceImple implements HeanService {
 
   public Boolean setStar(String hId, Long uId) {
     List<Long> starlist = heanRepository.findStarUIdsByHId(hId);
-    List<String> mystar = markRepository.findByUId(uId).getMarks();
+    Marked marked = markRepository.findByUId(uId);
+    if (marked == null) {
+      marked = new Marked(uId);
+    }
+    List<String> mystar = marked.getMarks();
     if (!starlist.contains(uId)) {
       mystar.add(hId);
       starlist.add(uId);
       Hean hean = heanRepository.findByHId(hId);
-      Marked marked = markRepository.findByUId(uId);
       hean.setStarUIds(starlist);
       marked.setMarks(mystar);
       heanRepository.save(hean);
@@ -89,12 +96,15 @@ public class HeanServiceImple implements HeanService {
 
   public Boolean cancelStar(String hId, Long uId) {
     List<Long> starlist = heanRepository.findStarUIdsByHId(hId);
-    List<String> mystar = markRepository.findByUId(uId).getMarks();
+    Marked marked = markRepository.findByUId(uId);
+    if (marked == null) {
+      return Boolean.FALSE;
+    }
+    List<String> mystar = marked.getMarks();
     if (starlist.contains(uId)) {
       mystar.remove(hId);
       starlist.remove(uId);
       Hean hean = heanRepository.findByHId(hId);
-      Marked marked = markRepository.findByUId(uId);
       hean.setStarUIds(starlist);
       marked.setMarks(mystar);
       heanRepository.save(hean);

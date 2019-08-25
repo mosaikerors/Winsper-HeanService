@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MarkRepository extends MongoRepository<Marked, String> {
+public interface MarkRepository extends MongoRepository<Marked, Long> {
 
   Marked findByUId(Long uId);
 }
