@@ -335,9 +335,14 @@ public class HeanController {
     @RequestMapping(value = "/submission", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject contributeByHId(@RequestBody JSONObject param, @RequestHeader("uId") Long uId) {
-        contributionService
-            .addNewContribution(param.getString("hId"), uId, param.getString("reason"));
+        String hId = param.getString("hId");
         JSONObject result = new JSONObject();
+        if (!heanRepository.findByHId(hId).getUId().equals(uId)) {
+            result.put("rescode", 2);
+            return result;
+        }
+        contributionService
+            .addNewContribution(hId, uId, param.getString("reason"));
         result.put("rescode", 0);
         return result;
     }
