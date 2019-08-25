@@ -24,8 +24,7 @@ public class HeanCommentServiceImple implements HeanCommentService {
 
     @Override
     public HeanComment findHeanCommentByCId(String cId) {
-        HeanComment commented = heanCommentRepository.findHeanCommentByCommmentId(cId);
-        return commented;
+        return heanCommentRepository.findHeanCommentByCommmentId(cId);
     }
 
     //给一个HeanComment加一个子Comment
@@ -35,11 +34,11 @@ public class HeanCommentServiceImple implements HeanCommentService {
         if (newComment.getTargetCommentId() != null) {
             HeanComment commented = heanCommentRepository
                     .findHeanCommentByCommmentId(newComment.getTargetCommentId());
-            commented.addReply(newComment.getCommmentId());
+            commented.addReply(newComment.getCommentId());
             heanCommentRepository.save(commented);
         }
         Hean comed = heanRepository.findByHId(newComment.getHId());
-        comed.addComment(newComment.getCommmentId());
+        comed.addComment(newComment.getCommentId());
         heanRepository.save(comed);
 
         return 0;
@@ -49,7 +48,7 @@ public class HeanCommentServiceImple implements HeanCommentService {
     public JSONObject getComJSONObject(String cId) {
         HeanComment heanComment = findHeanCommentByCId(cId);
         JSONObject ret = new JSONObject();
-        ret.put("commentId", heanComment.getCommmentId());
+        ret.put("commentId", heanComment.getCommentId());
         String commenter = userInfoService.getSimpleInfo(heanComment.getuId()).getString("username");
         ret.put("commenter", commenter);
         if (heanComment.getTargetCommentId() != "" && heanComment.getTargetCommentId() != null) {

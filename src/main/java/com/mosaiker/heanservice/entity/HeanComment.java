@@ -13,7 +13,7 @@ import java.util.List;
 public class HeanComment {
 
   @Id
-  private String CommmentId;
+  private String commentId;
   private String hId;
   private Long uId;
   private String content;
@@ -40,12 +40,12 @@ public class HeanComment {
     this.replies = replies;
   }
 
-  public String getCommmentId() {
-    return CommmentId;
+  public String getCommentId() {
+    return commentId;
   }
 
-  public void setCommmentId(String commmentId) {
-    CommmentId = commmentId;
+  public void setCommentId(String commentId) {
+    this.commentId = commentId;
   }
 
   public Long getuId() {
@@ -96,8 +96,8 @@ public class HeanComment {
     this.targetCommentId = targetCommentId;
   }
 
-  public void addReply(String commmentId) {
-    this.replies.add(commmentId);
+  public void addReply(String commentId) {
+    this.replies.add(commentId);
   }
 
 }
