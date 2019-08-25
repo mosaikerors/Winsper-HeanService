@@ -105,7 +105,7 @@ public class HeanControllerTest {
         add(1L);
       }});
     }});
-    when(heanRepository.findAllByCreatedTimeAfter(anyObject())).thenReturn(heanList);
+    when(heanRepository.findAllByCreatedTimeGreaterThanEqual(anyObject())).thenReturn(heanList);
     when(heanService.findAllHeans(anyDouble(), anyDouble())).thenReturn(heanList);
     when(heanService.findHeansByUId(1L)).thenReturn(heanList);
     JSONObject expect = new JSONObject(true);

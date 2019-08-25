@@ -108,8 +108,8 @@ public class HeanController {
             c.add(Calendar.YEAR, -1);
         }
         boundary = c.getTime().getTime();
-        return heanRepository.findAllByCreatedTimeAfter(boundary) == null ? new ArrayList<Hean>()
-                : heanRepository.findAllByCreatedTimeAfter(boundary);
+        return heanRepository.findAllByCreatedTimeGreaterThanEqual(boundary) == null ? new ArrayList<Hean>()
+                : heanRepository.findAllByCreatedTimeGreaterThanEqual(boundary);
     }
 
     @RequestMapping(value = "/card", method = RequestMethod.GET)
