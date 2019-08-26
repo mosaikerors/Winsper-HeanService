@@ -69,15 +69,15 @@ public class HeanCommentServiceImple implements HeanCommentService {
         List<HeanComment> commentList = heanCommentRepository.findAllByUId(owner);
         JSONArray array = new JSONArray();
         for (HeanComment com : commentList) {
+            Hean commed = heanRepository.findByHId(com.getHId());
+            if (commed == null) {
+                //该hean已被删除
+                continue;
+            }
             JSONObject onecom = new JSONObject();
             Boolean isCom = ((com.getTargetCommentId() == null) || (com.getTargetCommentId().isEmpty()));
             onecom.put("isComment", isCom);
             if (isCom) {
-                Hean commed = heanRepository.findByHId(com.getHId());
-                if (commed == null) {
-                    //该hean已被删除
-                    continue;
-                }
                 String username = userInfoService.getSimpleInfo(commed.getUId()).getString("username");
                 onecom.put("username", username);
             } else {
