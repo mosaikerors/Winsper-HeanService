@@ -372,6 +372,9 @@ public class HeanController {
         List<Contribution> list =contributionService.findContributionsByUId(owner);
         for(Contribution one:list){
             Hean hean = heanRepository.findByHId(one.getHId());
+            if (hean == null) {
+                continue;
+            }
             array.add(hean.ToCard(uId));
         }
         result.put("heanCards", array);

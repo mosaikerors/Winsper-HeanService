@@ -49,12 +49,15 @@ public class HeanCommentServiceImple implements HeanCommentService {
         HeanComment heanComment = findHeanCommentByCId(cId);
         JSONObject ret = new JSONObject();
         ret.put("commentId", heanComment.getCommentId());
-        String commenter = userInfoService.getSimpleInfo(heanComment.getuId()).getString("username");
-        ret.put("commenter", commenter);
+        JSONObject commenter = userInfoService.getSimpleInfo(heanComment.getuId());
+        ret.put("commenterUId", commenter.getLong("uId"));
+        ret.put("commenterUsername", commenter.getString("username"));
+        ret.put("commenterAvatar", commenter.getString("avatarUrl"));
         if (heanComment.getTargetCommentId() != null && !heanComment.getTargetCommentId().equals("")) {
             HeanComment target = findHeanCommentByCId(heanComment.getTargetCommentId());
-            String commented = userInfoService.getSimpleInfo(target.getuId()).getString("username");
-            ret.put("commented", commented);
+            JSONObject commented = userInfoService.getSimpleInfo(target.getuId());
+            ret.put("commentedUId", commented.getLong("uId"));
+            ret.put("commentedUsername", commented.getString("username"));
         }
         ret.put("time", heanComment.getCommentTime());
         ret.put("content", heanComment.getContent());
