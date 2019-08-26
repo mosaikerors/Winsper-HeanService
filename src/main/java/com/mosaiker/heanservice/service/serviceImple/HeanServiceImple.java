@@ -28,7 +28,7 @@ public class HeanServiceImple implements HeanService {
   }
 
   public List<Hean> findAllHeans(Double lon, Double lat) {
-    Long loc = new Geohash().encode(lon, lat);
+    Long loc = new Geohash().encode(lat, lon);
     return heanRepository.findAllByGeoStrBetween(loc - 250 * 250, loc + 250 * 250);
   }
 
