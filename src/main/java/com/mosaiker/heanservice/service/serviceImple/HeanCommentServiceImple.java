@@ -51,7 +51,7 @@ public class HeanCommentServiceImple implements HeanCommentService {
         ret.put("commentId", heanComment.getCommentId());
         String commenter = userInfoService.getSimpleInfo(heanComment.getuId()).getString("username");
         ret.put("commenter", commenter);
-        if (!heanComment.getTargetCommentId().equals("") && heanComment.getTargetCommentId() != null) {
+        if (heanComment.getTargetCommentId() != null && !heanComment.getTargetCommentId().equals("")) {
             HeanComment target = findHeanCommentByCId(heanComment.getTargetCommentId());
             String commented = userInfoService.getSimpleInfo(target.getuId()).getString("username");
             ret.put("commented", commented);
