@@ -16,9 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document
 public class Marked {
-  @GeneratedValue
   @Id
-  private String markId;
   private Long uId;
   @ElementCollection
   private List<String> marks;//list of marked hean card
