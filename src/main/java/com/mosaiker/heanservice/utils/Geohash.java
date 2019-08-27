@@ -24,6 +24,8 @@ public class Geohash {
 //
 //		System.out.println(new Geohash().encode(45, 125));
 //		System.out.println("\n");
+//		System.out.println(new Geohash().encode(45.0, 125.0));
+//		System.out.println("\n");
 //		System.out.println(new Geohash().encode(45.00001,125.000001));
 //
 //	}

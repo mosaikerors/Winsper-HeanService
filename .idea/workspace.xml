@@ -10,6 +10,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Arquillian JUnit Test Class" />
+        <option value="JUnit4 Test Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -28,7 +36,18 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.mosaiker.heanservice.utils" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -42,7 +61,51 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.GeohashTest.encode">
+    <configuration name="Geohash" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.mosaiker.heanservice.utils.Geohash" />
+      <module name="hean-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mosaiker.heanservice.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GeohashTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="hean-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mosaiker.heanservice.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mosaiker.heanservice.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.mosaiker.heanservice.utils.GeohashTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GeohashTest.encode" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="hean-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mosaiker.heanservice.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mosaiker.heanservice.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.mosaiker.heanservice.utils.GeohashTest" />
+      <option name="METHOD_NAME" value="encode" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HeanServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="user-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.mosaiker.heanservice.HeanServiceApplication" />
@@ -50,6 +113,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.GeohashTest.encode" />
+        <item itemvalue="JUnit.GeohashTest" />
+        <item itemvalue="Application.Geohash" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -66,7 +136,8 @@
       <workItem from="1565684491777" duration="2558000" />
       <workItem from="1566565862816" duration="9035000" />
       <workItem from="1566701797691" duration="16847000" />
-      <workItem from="1566791379408" duration="3871000" />
+      <workItem from="1566791379408" duration="5008000" />
+      <workItem from="1566907580618" duration="5835000" />
     </task>
     <servers />
   </component>
@@ -98,11 +169,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/mosaiker/heanservice/service/serviceImple/HeanCommentServiceImple.java</url>
           <line>55</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/mosaiker/heanservice/controller/HeanController.java</url>
-          <line>377</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/mosaiker/heanservice/service/serviceImple/HeanCommentServiceImple.java</url>
