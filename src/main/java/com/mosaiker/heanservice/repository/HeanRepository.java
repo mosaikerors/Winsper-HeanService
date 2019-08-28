@@ -12,6 +12,7 @@ public interface HeanRepository extends MongoRepository<Hean,String> {
   List<Hean> findAll();
   void deleteByHId(String hId);
   Hean findByHId(String hId);
-  List<Hean> findAllByGeoStrBetween(Long from,Long to);
   List<Hean> findAllByCreatedTimeGreaterThanEqual(Long time);
+  List<Hean> findAllByLongtitudeBetween(double longtitude, double longtitude2);
+  List<Hean> findAllByLatitudeBetween(double latitude, double latitude2);
 }

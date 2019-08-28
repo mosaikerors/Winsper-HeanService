@@ -7,7 +7,6 @@ import com.mosaiker.heanservice.repository.HeanRepository;
 import com.mosaiker.heanservice.repository.MarkRepository;
 import com.mosaiker.heanservice.service.HeanCommentService;
 import com.mosaiker.heanservice.service.HeanService;
-import com.mosaiker.heanservice.utils.Geohash;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,13 @@ public class HeanServiceImple implements HeanService {
   }
 
   public List<Hean> findAllHeans(Double lon, Double lat) {
-    Long loc = new Geohash().encode(lat, lon);
-    return heanRepository.findAllByGeoStrBetween(loc - 250 * 250, loc + 250 * 250);
+    List<Hean> heans1 = heanRepository.findAllByLatitudeBetween(lat - 0.005, lat + 0.005);
+    List<Hean> heans2 = heanRepository.findAllByLongtitudeBetween(lon - 0.005, lon + 0.005);
+    if (heans1 == null || heans2 == null) {
+      return new ArrayList<>();
+    }
+    heans1.retainAll(heans2);
+    return heans1;
   }
 
   public void deleteByHId(String hId) {

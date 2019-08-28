@@ -15,7 +15,6 @@ import com.mosaiker.heanservice.entity.Marked;
 import com.mosaiker.heanservice.repository.HeanRepository;
 import com.mosaiker.heanservice.repository.MarkRepository;
 import com.mosaiker.heanservice.service.HeanCommentService;
-import com.mosaiker.heanservice.utils.Geohash;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;

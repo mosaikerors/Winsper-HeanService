@@ -18,7 +18,6 @@ import com.mosaiker.heanservice.service.ContributionService;
 import com.mosaiker.heanservice.service.HeanService;
 import com.mosaiker.heanservice.service.PictureService;
 import com.mosaiker.heanservice.service.UserInfoService;
-import com.mosaiker.heanservice.utils.Geohash;
 import com.mosaiker.heanservice.utils.MyJSONUtil;
 import java.io.File;
 import java.io.FileInputStream;

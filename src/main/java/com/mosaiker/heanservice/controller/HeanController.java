@@ -9,7 +9,6 @@ import com.mosaiker.heanservice.service.ContributionService;
 import com.mosaiker.heanservice.service.HeanService;
 import com.mosaiker.heanservice.service.PictureService;
 import com.mosaiker.heanservice.service.UserInfoService;
-import com.mosaiker.heanservice.utils.Geohash;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
