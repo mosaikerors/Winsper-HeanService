@@ -111,6 +111,19 @@ public class HeanController {
                 : heanRepository.findAllByCreatedTimeGreaterThanEqual(boundary);
     }
 
+    @RequestMapping(value = "/allByTime", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject findAllByTime(@RequestParam String time) {
+        JSONObject ret = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        List<Hean> heans = findTimePoint(time, 0L);
+        for (Hean hean : heans) {
+            jsonArray.add(hean.ToJSONObject());
+        }
+        ret.put("heans", jsonArray);
+        return ret;
+    }
+
     @RequestMapping(value = "/card", method = RequestMethod.GET)
     @ResponseBody
     public JSONObject findOneCardHean(@RequestParam String hId, @RequestHeader("uId") Long uId) {

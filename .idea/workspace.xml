@@ -39,7 +39,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Winsper-Zuul" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -137,7 +137,11 @@
       <workItem from="1566565862816" duration="9035000" />
       <workItem from="1566701797691" duration="16847000" />
       <workItem from="1566791379408" duration="5008000" />
-      <workItem from="1566907580618" duration="10076000" />
+      <workItem from="1566907580618" duration="12398000" />
+      <workItem from="1567482278146" duration="28000" />
+      <workItem from="1567523963497" duration="577000" />
+      <workItem from="1567565443670" duration="3092000" />
+      <workItem from="1567751477548" duration="1602000" />
     </task>
     <servers />
   </component>

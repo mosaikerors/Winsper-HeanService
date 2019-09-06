@@ -22,12 +22,14 @@ public class Contribution {
   private Long uId;
   private Long date;
   private String reason;
+  private int status;  //0-未审核，1-审核通过，2-审核不通过
 
   public Contribution(String hId, Long uId, String reason) {
     this.hId = hId;
     this.uId = uId;
     this.date = new Date().getTime();
     this.reason = reason;
+    this.status = 0;
   }
 
   public JSONObject ToJSONObject() {
@@ -37,6 +39,7 @@ public class Contribution {
       put("uId", uId);
       put("date", date);
       put("reason", reason);
+      put("status", status);
     }};
   }
 
