@@ -22,7 +22,7 @@ public class ContributionServiceImple implements ContributionService {
         c.setTime(new Date(date));
         c.add(Calendar.DATE, -1);
         Date boundary=c.getTime();
-        return contributionRepository.findAllByDateAfter(boundary.getTime());
+        return contributionRepository.findAllByDateGreaterThanEqual(boundary.getTime());
     }
 
     @Override
